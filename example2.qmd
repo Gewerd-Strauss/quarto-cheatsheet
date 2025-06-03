@@ -1,0 +1,119 @@
+---
+title: "Beispiel-CheatSheet"
+format:
+  quarto-cheatsheet-pdf:
+    highlight-style: none
+    latex-auto-mk: true
+    latex-auto-install: true
+    cheat-fontsize: tiny
+    body-fontsize: small
+    cheat-vspace-above: "-2pt"
+    cheat-vspace-below: "-2pt"
+    numcols: 2
+    geometry:
+    - top=1.2cm
+    - bottom=1.2cm
+    - left=4.0cm
+    - right=1.5cm
+    # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
+    nodecolor: "FF5733"
+    linecolor: "C70039"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
+---
+
+
+Dies ist ein CheatSheetdd über grundlegende Programmierkonzepte. Die Blöcke unten zeigen Beispiele.
+
+# A
+
+::: {.cheat title="Rekursion"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+# B
+
+::: {.cheat title="Rekursion"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+# C
+
+::: {.cheat title="Rekursion"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::

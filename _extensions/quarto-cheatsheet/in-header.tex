@@ -1,20 +1,30 @@
+% in-header.tex
 \usepackage{tikz}
 \usepackage{url}
 \usepackage{multicol}
 \usepackage{amsmath}
 \usepackage{esint}
 \usepackage{amsfonts}
-\usepackage{tikz}
 \usetikzlibrary{decorations.pathmorphing}
-\usepackage{amsmath,amssymb}
-
+\usepackage{amssymb}
 \usepackage{colortbl}
 \usepackage{xcolor}
 \usepackage{mathtools}
-\usepackage{amsmath,amssymb}
 \usepackage{enumitem}
-\makeatletter
+\usepackage{framed}    % provides the Shaded environment
+\usepackage{color}     % for colors used inside Shaded
+\usepackage{fancyvrb}  % for fancy verbatim environments, often needed
 
+
+\usepackage{framed}
+\usepackage{fancyvrb}
+\usepackage{color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+
+
+\makeatletter
 \newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
 \newcommand*\bigcdot@[2]{\mathbin{\vcenter{\hbox{\scalebox{#2}{$\m@th#1\bullet$}}}}}
 \makeatother
@@ -26,6 +36,7 @@
 \advance\textwidth3in
 \advance\oddsidemargin-1.5in
 \advance\evensidemargin-1.5in
+
 \parindent0pt
 \parskip2pt
 \newcommand{\hr}{\centerline{\rule{3.5in}{1pt}}}
