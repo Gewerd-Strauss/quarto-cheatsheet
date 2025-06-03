@@ -18,12 +18,12 @@ contributes:
       lang: de
       date-format: "DD.MM.YYYY"
       linkcolor: black
-      include-in-header: in-header.tex
+      include-in-header: multicols/in-header.tex
       template-partials: 
-        - before-body.tex
-        - after-body.tex
+        - multicols/before-body.tex
+        - multicols/after-body.tex
       filters: 
-        - cheatsheet.lua
+        - multicols/cheatsheet.lua
 
     quarto-cheatsheet-pdf:
       cheat-fontsize: "\\scriptsize"
