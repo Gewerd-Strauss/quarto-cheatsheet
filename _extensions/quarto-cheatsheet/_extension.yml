@@ -9,7 +9,7 @@ contributes:
       geometry: 
         - a4paper
         - bottom=78mm
-        - landscape
+        # - landscape
       keep-tex: false
       df-print: kable
       papersize: a4

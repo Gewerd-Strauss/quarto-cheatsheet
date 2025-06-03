@@ -31,7 +31,7 @@ function Meta(meta)
     cheat_vspace_below = getopt("cheat-vspace-below", "6pt"),
     body_fontsize      = latexcmd(ext["body-fontsize"] or "tiny"),
     cheat_fontsize     = latexcmd(ext["cheat-fontsize"] or "tiny"),
-    numcols            = getopt("numcols", "2"),
+    numcols            = getopt("numcols", "1"),
   }
 
   local colwidth = string.format("%.4f\\textwidth", 0.95)
@@ -55,9 +55,6 @@ function Pandoc(doc)
   local fontsize_cmd = user_options.body_fontsize or "\\normalsize"
 
   -- Wrap all blocks in multicols
-  -- local start = pandoc.RawBlock("latex", "\\begin{multicols}{" .. user_options.numcols .. "}")
-  -- local stop = pandoc.RawBlock("latex", "\\end{multicols}")
-  
   local start = pandoc.RawBlock("latex", "\\raggedcolumns\\begin{multicols}{" .. user_options.numcols .. "}")
   local stop = pandoc.RawBlock("latex", "\\end{multicols}")
 
@@ -80,7 +77,7 @@ function generateCheatBlockLatex(block)
   local fs = user_options.cheat_fontsize or "small"
   local above = user_options.cheat_vspace_above or "0pt"
   local below = user_options.cheat_vspace_below or "6pt"
-  local numcols = tonumber(user_options.numcols) or 2
+  local numcols = tonumber(user_options.numcols) or 1
   local colwidth = string.format("%.4f\\linewidth", 0.98)  -- Adjusted to use \linewidth
 
   local pandocDoc = pandoc.Pandoc(content, {})
@@ -99,7 +96,10 @@ function generateCheatBlockLatex(block)
   table.insert(latex, latexContent)
   table.insert(latex, "    }")
   table.insert(latex, "  };")
-  table.insert(latex, "  \\node[fancytitle, right=30pt] at (box.north west) {" .. title .. "};")
+  -- table.insert(latex, "\\node[fancytitle, anchor=south west] at (box.north west) {" .. title .. "};")
+  -- table.insert(latex, "\\node[fancytitle, anchor=south, yshift=-5pt] at (box.north) {" .. title .. "};")
+  table.insert(latex, "\\node[fancytitle, anchor=south, yshift=0pt] at (box.north) {" .. title .. "};")
+
   table.insert(latex, "\\end{tikzpicture}")
   table.insert(latex, "\\end{minipage}")
 

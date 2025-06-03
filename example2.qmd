@@ -9,7 +9,7 @@ format:
     body-fontsize: small
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
-    numcols: 2
+    numcols: 3
     geometry:
     - top=1.5cm
     - bottom=1.5cm
@@ -172,6 +172,13 @@ print(f(4))  # 16
 ```
 :::
 
+\newpage 
+\newpage 
+\newpage 
+
+{{< pagebreak >}}
+{{< pagebreak >}}
+{{< pagebreak >}}
 
 ::: {.cheat title="Rekursion"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
