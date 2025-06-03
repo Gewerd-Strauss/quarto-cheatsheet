@@ -22,8 +22,9 @@ contributes:
       template-partials: 
         - before-body.tex
         - after-body.tex
-      filters: 
-        - cheatsheet.lua
+      filters:
+        - cheatblocks-paracol.lua  # or cheatblocks-paracol.lua
+        # - cheatsheet.lua
 
     quarto-cheatsheet-pdf:
       cheat-fontsize: "\\scriptsize"
