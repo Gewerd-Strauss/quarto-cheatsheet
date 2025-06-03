@@ -8,10 +8,12 @@ contributes:
       documentclass: article
       geometry: 
         - a4paper
-        - landscape
         - bottom=78mm
+        - landscape
       keep-tex: false
       df-print: kable
+      papersize: a4
+      # classoption: [landscape]
       code-line-numbers: true
       lang: de
       date-format: "DD.MM.YYYY"
