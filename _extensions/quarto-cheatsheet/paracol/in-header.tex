@@ -1,0 +1,19 @@
+\usepackage{paracol}
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usepackage[most]{tcolorbox}
+% \usepackage[margin=1.5cm]{geometry}
+
+% Define the cheatbox environment
+\newtcolorbox{cheatbox}[1][]{%
+  enhanced,
+  colback=gray!5,
+  colframe=black,
+  sharp corners,
+  boxrule=0.4pt,
+  fonttitle=\bfseries,
+  title=#1,
+  top=2pt, bottom=2pt, left=4pt, right=4pt,
+  before skip=6pt, after skip=6pt,
+  width=\linewidth,
+}

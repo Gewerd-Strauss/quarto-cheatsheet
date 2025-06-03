@@ -16,7 +16,7 @@ format:
     - bottom=1.5cm
     - left=3.9cm
     - right=0cm
-    # - landscape
+    - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
     nodecolor: "FF5733"
     linecolor: "C70039"

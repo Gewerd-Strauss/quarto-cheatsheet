@@ -1,0 +1,16 @@
+\newcounter{colnum}
+\setcounter{colnum}{1}
+\newlength{\colheight}
+\setlength{\colheight}{0pt}
+
+\def\StartCheatColumns#1{%
+  \begin{paracol}{#1}%
+  \setcounter{colnum}{1}%
+  \setlength{\colheight}{0pt}%
+}
+
+\def\EndCheatColumns{%
+  \end{paracol}
+}
+
+\StartCheatColumns{3} % default; overridden by Lua
