@@ -3,6 +3,7 @@
 format:
   quarto-cheatsheet-pdf:
     highlight-style: none
+    keep-tex: true
     latex-auto-mk: true
     latex-auto-install: true
     cheat-fontsize: tiny
