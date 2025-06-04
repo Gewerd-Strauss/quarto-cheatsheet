@@ -1,8 +1,10 @@
 -- cheatsheet.lua
 
 local user_options = {}
+
 local function latexcmd(s)
   s = pandoc.utils.stringify(s or "")
+  if s == "" then return "" end
   if not s:match("^\\") then
     return "\\" .. s
   else
@@ -10,17 +12,15 @@ local function latexcmd(s)
   end
 end
 
--- Extract metadata when the document is first loaded
 function Meta(meta)
-  -- local ext = meta.format and meta.format["quarto-cheatsheet-pdf"] or {}
-  local ext = meta
-  for k, v in pairs(meta) do
-    io.stderr:write("ext[" .. tostring(k) .. "] = " .. pandoc.utils.stringify(v) .. "\n")
-  end
-  
+  -- Attempt to get options from format.quarto-cheatsheet-pdf or fallback top-level
+  local fmt_opts = (meta.format and meta.format["quarto-cheatsheet-pdf"]) or {}
+
   local function getopt(key, default)
-    if ext[key] ~= nil then
-      return pandoc.utils.stringify(ext[key])
+    if fmt_opts[key] ~= nil then
+      return pandoc.utils.stringify(fmt_opts[key])
+    elseif meta[key] ~= nil then
+      return pandoc.utils.stringify(meta[key])
     else
       return default
     end
@@ -29,12 +29,13 @@ function Meta(meta)
   user_options = {
     cheat_vspace_above = getopt("cheat-vspace-above", "0pt"),
     cheat_vspace_below = getopt("cheat-vspace-below", "6pt"),
-    body_fontsize      = latexcmd(ext["body-fontsize"] or "tiny"),
-    cheat_fontsize     = latexcmd(ext["cheat-fontsize"] or "tiny"),
-    numcols            = getopt("numcols", "1"),
+    body_fontsize      = latexcmd(getopt("body-fontsize", "normalsize")),
+    cheat_fontsize     = latexcmd(getopt("cheat-fontsize", "tiny")),
+    numcols            = tonumber(getopt("numcols", "1")) or 1,
   }
 
-  local colwidth = string.format("%.4f\\textwidth", 0.95)
+  -- Calculate and store a cheatbox width (approx 0.95 textwidth divided by numcols)
+  local colwidth = string.format("%.4f\\textwidth", 0.95 / user_options.numcols)
   meta["cheatboxwidth"] = pandoc.MetaInlines({ pandoc.Str(colwidth) })
 
   return meta
@@ -54,7 +55,7 @@ end
 function Pandoc(doc)
   local fontsize_cmd = user_options.body_fontsize or "\\normalsize"
 
-  -- Wrap all blocks in multicols
+  -- Wrap everything in multicols
   local start = pandoc.RawBlock("latex", "\\raggedcolumns\\begin{multicols}{" .. user_options.numcols .. "}")
   local stop = pandoc.RawBlock("latex", "\\end{multicols}")
 
@@ -74,11 +75,10 @@ function generateCheatBlockLatex(block)
   local title = pandoc.utils.stringify(block.attributes["title"] or "")
   local content = block.content
 
-  local fs = user_options.cheat_fontsize or "small"
+  local fs = user_options.cheat_fontsize or "\\tiny"
   local above = user_options.cheat_vspace_above or "0pt"
   local below = user_options.cheat_vspace_below or "6pt"
-  local numcols = tonumber(user_options.numcols) or 1
-  local colwidth = string.format("%.4f\\linewidth", 0.98)  -- Adjusted to use \linewidth
+  local colwidth = string.format("%.4f\\linewidth", 0.98)  -- Keep relative to column width
 
   local pandocDoc = pandoc.Pandoc(content, {})
   local latexContent = pandoc.write(pandocDoc, "latex")
@@ -88,18 +88,14 @@ function generateCheatBlockLatex(block)
   table.insert(latex, "\\needspace{5\\baselineskip}")
   table.insert(latex, "\\vspace*{" .. above .. "}")
 
-  -- Wrap the TikZ picture in a minipage to confine it within the column width
   table.insert(latex, "\\begin{minipage}{" .. colwidth .. "}")
   table.insert(latex, "\\begin{tikzpicture}")
   table.insert(latex, "  \\node [mybox] (box) {")
-  table.insert(latex, "    {%" .. fs)
+  table.insert(latex, "    {" .. fs)
   table.insert(latex, latexContent)
   table.insert(latex, "    }")
   table.insert(latex, "  };")
-  -- table.insert(latex, "\\node[fancytitle, anchor=south west] at (box.north west) {" .. title .. "};")
-  -- table.insert(latex, "\\node[fancytitle, anchor=south, yshift=-5pt] at (box.north) {" .. title .. "};")
   table.insert(latex, "\\node[fancytitle, anchor=south, yshift=0pt] at (box.north) {" .. title .. "};")
-
   table.insert(latex, "\\end{tikzpicture}")
   table.insert(latex, "\\end{minipage}")
 
@@ -122,5 +118,5 @@ return {
   { Meta = Meta },
   { Header = Header },
   { Div = replaceCheatBlock },
-  { Pandoc = Pandoc }
+  { Pandoc = Pandoc },
 }

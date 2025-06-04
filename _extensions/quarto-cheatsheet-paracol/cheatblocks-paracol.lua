@@ -1,22 +1,28 @@
--- cheatblocks-paracol.lua
 local column_count = 3
-local current_column = 1
-local max_height = 700  -- arbitrary max height per column (adjust based on your content)
-local heights = {}
+local max_height = 700
 local blocks = {}
+local use_paracol = false
 
 function Meta(meta)
-    if meta.numcols and meta.numcols.t == "MetaInlines" then
-        local val = pandoc.utils.stringify(meta.numcols)
-        local n = tonumber(val)
-        if n then
-            column_count = n
+    if meta["quarto-cheatsheet-pdf"] then
+        local format_opts = meta["quarto-cheatsheet-pdf"]
+        if format_opts.numcols then
+            local val = pandoc.utils.stringify(format_opts.numcols)
+            local n = tonumber(val)
+            if n then
+                column_count = n
+            end
+        end
+        if format_opts["use-paracol"] then
+            use_paracol = pandoc.utils.stringify(format_opts["use-paracol"]) == "true"
         end
     end
     return meta
 end
 
+
 function Div(div)
+    if not use_paracol then return nil end
     if div.classes:includes("cheat") then
         table.insert(blocks, div)
         return pandoc.Null() -- Remove original
@@ -25,6 +31,7 @@ end
 
 function Doc(body)
     -- Simulated layout tracking
+    if not use_paracol then return nil end
     local col_heights = {}
     for i = 1, column_count do col_heights[i] = 0 end
 
@@ -38,9 +45,9 @@ function Doc(body)
         for i = 1, column_count do
             if col_heights[i] + h <= max_height then
                 table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[" .. i .. "]"))
-                table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatbox}"))
+                table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
                 for _, el in ipairs(blk.content) do table.insert(out, el) end
-                table.insert(out, pandoc.RawBlock("latex", "\\end{cheatbox}"))
+                table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
                 col_heights[i] = col_heights[i] + h
                 placed = true
                 break
@@ -57,9 +64,9 @@ function Doc(body)
 
             -- Insert into first column
             table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[1]"))
-            table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatbox}"))
+            table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
             for _, el in ipairs(blk.content) do table.insert(out, el) end
-            table.insert(out, pandoc.RawBlock("latex", "\\end{cheatbox}"))
+            table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
             col_heights[1] = h
         end
     end
