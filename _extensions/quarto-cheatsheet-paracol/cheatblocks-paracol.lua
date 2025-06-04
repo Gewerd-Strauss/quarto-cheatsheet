@@ -1,8 +1,37 @@
 local column_count = 3
 local max_height = 700
 local blocks = {}
-local use_paracol = false
-
+-- local use_paracol = true
+function Pandoc(doc)
+    if not use_paracol then return nil end
+  
+    local num = tonumber(numcols) or 2
+    local cols = {}
+    for i = 1, num do cols[i] = {} end
+  
+    -- Fill columns top-to-bottom, left-to-right
+    local col = 1
+    for _, el in ipairs(doc.blocks) do
+      if el.t == "Div" and el.classes:includes("cheat") then
+        table.insert(cols[col], el)
+        col = (col % num) + 1
+      end
+    end
+  
+    local output = { pandoc.RawBlock("latex", "\\begin{paracol}{" .. num .. "}") }
+    for i = 1, num do
+      if i > 1 then
+        table.insert(output, pandoc.RawBlock("latex", "\\switchcolumn"))
+      end
+      for _, box in ipairs(cols[i]) do
+        table.insert(output, box)
+      end
+    end
+    table.insert(output, pandoc.RawBlock("latex", "\\end{paracol}"))
+  
+    return pandoc.Pandoc(output, doc.meta)
+  end
+  
 function Meta(meta)
     if meta["quarto-cheatsheet-pdf"] then
         local format_opts = meta["quarto-cheatsheet-pdf"]
@@ -20,18 +49,23 @@ function Meta(meta)
     return meta
 end
 
-
 function Div(div)
-    if not use_paracol then return nil end
     if div.classes:includes("cheat") then
-        table.insert(blocks, div)
-        return pandoc.Null() -- Remove original
+      local content = {
+        pandoc.RawBlock("latex", "\\begin{cheatboxparacol}"),
+      }
+      for _, el in ipairs(div.content) do
+        table.insert(content, el)
+      end
+      table.insert(content, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
+      return pandoc.Div(content)
     end
-end
+    return nil
+  end
+  
 
 function Doc(body)
     -- Simulated layout tracking
-    if not use_paracol then return nil end
     local col_heights = {}
     for i = 1, column_count do col_heights[i] = 0 end
 
