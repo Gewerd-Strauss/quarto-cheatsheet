@@ -1,0 +1,612 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{article}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[top=1.5cm,bottom=1.5cm,left=0.2cm,right=0.2cm,landscape]{geometry}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{paracol}
+\usepackage{paracol}
+\newenvironment{cheatboxparacol}{\par\vspace{2pt}\noindent\begin{tcolorbox}[enhanced, sharp corners, colback=gray!5]}{\end{tcolorbox}\vspace{2pt}}
+
+\newcommand{\StartCheatColumns}[1]{\begin{paracol}{#1}}
+\newcommand{\EndCheatColumns}{\end{paracol}}
+
+\usepackage{tikz}
+\usepackage{etoolbox}
+\usepackage[most]{tcolorbox}
+% \usepackage[margin=1.5cm]{geometry}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}{}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, breakable, sharp corners, boxrule=0pt, interior hidden, enhanced, borderline west={3pt}{0pt}{shadecolor}]}{\end{tcolorbox}}\fi
+\makeatother
+
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\author{}
+\date{}
+
+\begin{document}
+\newcounter{colnum}
+\setcounter{colnum}{1}
+\newlength{\colheight}
+\setlength{\colheight}{0pt}
+
+\def\StartCheatColumns#1{%
+  \begin{paracol}{#1}%
+    \setcounter{colnum}{1}%
+  \setlength{\colheight}{0pt}%
+  }
+  
+  \def\EndCheatColumns{%
+  \end{paracol}
+}
+
+\StartCheatColumns{3} % default; overridden by Lua
+
+% Custom font size for body text
+
+% Custom page geometry
+
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\newpage 
+\newpage 
+\newpage
+
+\newpage{}
+
+\newpage{}
+
+\newpage{}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+\begin{verbatim}
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+\begin{itemize}
+\tightlist
+\item
+  Liste: \texttt{{[}1,\ 2,\ 3{]}}
+\item
+  Set: \texttt{\{1,\ 2,\ 3\}}
+\item
+  Dictionary: \texttt{\{"a":\ 1,\ "b":\ 2\}}
+\end{itemize}
+
+\end{cheatboxparacol}
+
+\begin{cheatboxparacol}
+
+Anonyme Funktionen:
+
+\begin{verbatim}
+f = lambda x: x * x
+print(f(4))  # 16
+\end{verbatim}
+
+\end{cheatboxparacol}
+
+
+
+\EndCheatColumns
+\end{document}

@@ -1,7 +1,7 @@
 ---
 # title: "Beispiel-CheatSheet"
 format:
-  quarto-cheatsheet-pdf:
+  quarto-cheatsheet-paracol-pdf:
     highlight-style: none
     keep-tex: true
     latex-auto-mk: true
@@ -10,12 +10,13 @@ format:
     body-fontsize: small
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
-    numcols: 3
+    numcols: 2
+    use-paracol: false
     geometry:
     - top=1.5cm
     - bottom=1.5cm
-    - left=3.9cm
-    - right=0cm
+    - left=0.2cm
+    - right=0.2cm
     - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
     nodecolor: "FF5733"

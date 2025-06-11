@@ -63,25 +63,56 @@ function Div(div)
     return nil
   end
   
+function get_column_count(meta)
+    if meta["quarto-cheatsheet-pdf"] and meta["quarto-cheatsheet-pdf"].numcols then
+        local val = pandoc.utils.stringify(meta["quarto-cheatsheet-pdf"].numcols)
+        local n = tonumber(val)
+        if n then return n end
+    end
+    return 2
+end
 
 function Doc(body)
-    -- Simulated layout tracking
-    local col_heights = {}
-    for i = 1, column_count do col_heights[i] = 0 end
-
     local out = {}
-    table.insert(out, pandoc.RawBlock("latex", "\\StartCheatColumns{" .. column_count .. "}"))
+    local page_blocks = {}
+    local col_heights = {}
+    column_count = get_column_count(body.meta)
+    
+    for i = 1, column_count do
+        col_heights[i] = 0
+        page_blocks[i] = {}
+    end
+
+    local function flush_page()
+        table.insert(out, pandoc.RawBlock("latex", "\\StartCheatColumns{" .. column_count .. "}"))
+        for i = 1, column_count do
+            table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[" .. i .. "]"))
+            for _, blk in ipairs(page_blocks[i]) do
+                table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
+                for _, el in ipairs(blk.content) do
+                    table.insert(out, el)
+                end
+                table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
+            end
+        end
+        table.insert(out, pandoc.RawBlock("latex", "\\EndCheatColumns"))
+        table.insert(out, pandoc.RawBlock("latex", "\\newpage"))
+
+        -- Reset for next page
+        page_blocks = {}
+        col_heights = {}
+        for i = 1, column_count do
+            page_blocks[i] = {}
+            col_heights[i] = 0
+        end
+    end
 
     for _, blk in ipairs(blocks) do
-        local h = 100 -- Simulated fixed height per box (adjustable)
+        local h = 100 -- Simulated height
         local placed = false
-
         for i = 1, column_count do
             if col_heights[i] + h <= max_height then
-                table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[" .. i .. "]"))
-                table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
-                for _, el in ipairs(blk.content) do table.insert(out, el) end
-                table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
+                table.insert(page_blocks[i], blk)
                 col_heights[i] = col_heights[i] + h
                 placed = true
                 break
@@ -89,22 +120,35 @@ function Doc(body)
         end
 
         if not placed then
-            -- New page and reset
-            table.insert(out, pandoc.RawBlock("latex", "\\EndCheatColumns"))
-            table.insert(out, pandoc.RawBlock("latex", "\\newpage"))
-            col_heights = {}
-            for i = 1, column_count do col_heights[i] = 0 end
-            table.insert(out, pandoc.RawBlock("latex", "\\StartCheatColumns{" .. column_count .. "}"))
-
-            -- Insert into first column
-            table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[1]"))
-            table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
-            for _, el in ipairs(blk.content) do table.insert(out, el) end
-            table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
+            flush_page()
+            -- Place in first column of new page
+            page_blocks[1] = { blk }
             col_heights[1] = h
         end
     end
 
-    table.insert(out, pandoc.RawBlock("latex", "\\EndCheatColumns"))
+    -- Flush remaining blocks
+    local non_empty = false
+    for i = 1, column_count do
+        if #page_blocks[i] > 0 then
+            non_empty = true
+            break
+        end
+    end
+    if non_empty then
+        table.insert(out, pandoc.RawBlock("latex", "\\StartCheatColumns{" .. column_count .. "}"))
+        for i = 1, column_count do
+            table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn[" .. i .. "]"))
+            for _, blk in ipairs(page_blocks[i]) do
+                table.insert(out, pandoc.RawBlock("latex", "\\noindent\\begin{cheatboxparacol}"))
+                for _, el in ipairs(blk.content) do
+                    table.insert(out, el)
+                end
+                table.insert(out, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
+            end
+        end
+        table.insert(out, pandoc.RawBlock("latex", "\\EndCheatColumns"))
+    end
+
     return pandoc.Pandoc(out, body.meta)
 end

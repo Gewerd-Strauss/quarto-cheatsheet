@@ -14,3 +14,13 @@
 }
 
 \StartCheatColumns{3} % default; overridden by Lua
+
+% Custom font size for body text
+$if(quarto-cheatsheet-pdf.body-fontsize)$
+$quarto-cheatsheet-pdf.body-fontsize$
+$endif$
+
+% Custom page geometry
+$if(quarto-cheatsheet-pdf.page-margins)$
+\geometry{$quarto-cheatsheet-pdf.page-margins$}
+$endif$
