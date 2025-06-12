@@ -10,8 +10,8 @@ format:
     body-fontsize: small
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
-    numcols: 2
-    use-paracol: false
+    numcols: 4
+    use-paracol: true
     geometry:
     - top=1.5cm
     - bottom=1.5cm
@@ -27,7 +27,7 @@ format:
 
 
 
-::: {.cheat title="Rekursion"}
+::: {.cheat title="Rekursion (1.1)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -39,7 +39,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (2.1)" column="2"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -47,7 +47,7 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (2.2)" column="2"}
 Anonyme Funktionen:
 
 ```
@@ -56,7 +56,9 @@ print(f(4))  # 16
 ```
 :::
 
-::: {.cheat title="Rekursion"}
+## title3
+
+::: {.cheat title="Rekursion (1.2)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -68,7 +70,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (2.3)" column="2"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -76,37 +78,7 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
-Anonyme Funktionen:
-
-```
-f = lambda x: x * x
-print(f(4))  # 16
-```
-:::
-
-
-::: {.cheat title="Rekursion"}
-Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
-
-Beispiel in Python:
-
-```
-def factorial(n):
-    return 1 if n == 0 else n * factorial(n-1)
-```
-:::
-
-
-::: {.cheat title="Datenstrukturen"}
-Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
-
-- Liste: `[1, 2, 3]`
-- Set: `{1, 2, 3}`
-- Dictionary: `{"a": 1, "b": 2}`
-:::
-
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (2.4)" column="2"}
 Anonyme Funktionen:
 
 ```
@@ -116,7 +88,7 @@ print(f(4))  # 16
 :::
 
 
-::: {.cheat title="Rekursion"}
+::: {.cheat title="Rekursion (1.3)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -128,7 +100,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (2.5)" column="2"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -136,102 +108,7 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
-Anonyme Funktionen:
-
-```
-f = lambda x: x * x
-print(f(4))  # 16
-```
-:::
-
-::: {.cheat title="Rekursion"}
-Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
-
-Beispiel in Python:
-
-```
-def factorial(n):
-    return 1 if n == 0 else n * factorial(n-1)
-```
-:::
-
-
-::: {.cheat title="Datenstrukturen"}
-Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
-
-- Liste: `[1, 2, 3]`
-- Set: `{1, 2, 3}`
-- Dictionary: `{"a": 1, "b": 2}`
-:::
-
-::: {.cheat title="Lambda-Funktionen"}
-Anonyme Funktionen:
-
-```
-f = lambda x: x * x
-print(f(4))  # 16
-```
-:::
-
-\newpage 
-\newpage 
-\newpage 
-
-{{< pagebreak >}}
-{{< pagebreak >}}
-{{< pagebreak >}}
-
-::: {.cheat title="Rekursion"}
-Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
-
-Beispiel in Python:
-
-```
-def factorial(n):
-    return 1 if n == 0 else n * factorial(n-1)
-```
-:::
-
-
-::: {.cheat title="Datenstrukturen"}
-Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
-
-- Liste: `[1, 2, 3]`
-- Set: `{1, 2, 3}`
-- Dictionary: `{"a": 1, "b": 2}`
-:::
-
-::: {.cheat title="Lambda-Funktionen"}
-Anonyme Funktionen:
-
-```
-f = lambda x: x * x
-print(f(4))  # 16
-```
-:::
-
-::: {.cheat title="Rekursion"}
-Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
-
-Beispiel in Python:
-
-```
-def factorial(n):
-    return 1 if n == 0 else n * factorial(n-1)
-```
-:::
-
-
-::: {.cheat title="Datenstrukturen"}
-Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
-
-- Liste: `[1, 2, 3]`
-- Set: `{1, 2, 3}`
-- Dictionary: `{"a": 1, "b": 2}`
-:::
-
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (2.6)" column="2"}
 Anonyme Funktionen:
 
 ```
@@ -241,7 +118,7 @@ print(f(4))  # 16
 :::
 
 
-::: {.cheat title="Rekursion"}
+::: {.cheat title="Rekursion (1.4)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -253,7 +130,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (2.7)" column="2"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -261,7 +138,7 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (2.8)" column="2"}
 Anonyme Funktionen:
 
 ```
@@ -270,7 +147,7 @@ print(f(4))  # 16
 ```
 :::
 
-::: {.cheat title="Rekursion"}
+::: {.cheat title="Rekursion (1.5)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -282,7 +159,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (2.9)" column="2"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -290,7 +167,7 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (2.10)" column="2"}
 Anonyme Funktionen:
 
 ```
@@ -300,7 +177,7 @@ print(f(4))  # 16
 :::
 
 
-::: {.cheat title="Rekursion"}
+::: {.cheat title="Rekursion (1.6)" column="1"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -312,7 +189,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen"}
+::: {.cheat title="Datenstrukturen (3.1)" column="3"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -320,7 +197,125 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen"}
+::: {.cheat title="Lambda-Funktionen (3.2)" column="3"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+::: {.cheat title="Rekursion (3.3)" column="3"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen (1.7)" column="1"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen (3.4)" column="3"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+
+::: {.cheat title="Rekursion (3.5)" column="3"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen (1.8)" column="1"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen (2.11)" column="2"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+::: {.cheat title="Rekursion (3.6)" column="3"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen (3.7)" column="3"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen (1.9)" column="1"}
+Anonyme Funktionen:
+
+```
+f = lambda x: x * x
+print(f(4))  # 16
+```
+:::
+
+
+::: {.cheat title="Rekursion (1.10)" column="1"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+
+
+::: {.cheat title="Datenstrukturen (2.12)" column="2"}
+Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
+
+- Liste: `[1, 2, 3]`
+- Set: `{1, 2, 3}`
+- Dictionary: `{"a": 1, "b": 2}`
+:::
+
+::: {.cheat title="Lambda-Funktionen (2.13)" column="2"}
 Anonyme Funktionen:
 
 ```
