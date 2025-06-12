@@ -49,20 +49,30 @@ function Meta(meta)
     return meta
 end
 
-function Div(div)
-    if div.classes:includes("cheat") then
-      local content = {
-        pandoc.RawBlock("latex", "\\begin{cheatboxparacol}"),
-      }
-      for _, el in ipairs(div.content) do
-        table.insert(content, el)
+function Div(el)
+    if el.classes:includes("cheat") then
+      local title = el.attributes["title"] or "Cheat"
+      local content = pandoc.write(pandoc.Pandoc(el.content), "latex")
+  
+      local column_switch = ""
+      local colnum = el.attributes["column"]
+      if colnum then
+        -- column_switch = string.format("\\switchcolumn[0]", tonumber(colnum)*12) -- this will place all enties in the first column
+        column_switch = string.format("\\switchcolumn[%d]", tonumber(colnum-1))
+
       end
-      table.insert(content, pandoc.RawBlock("latex", "\\end{cheatboxparacol}"))
-      return pandoc.Div(content)
+  
+      return pandoc.RawBlock("latex", string.format([[
+%s
+\begin{tcolorbox}[cheatbox, title=%s]
+%s
+\end{tcolorbox}
+]], column_switch, title, content))
+
     end
-    return nil
   end
   
+
 function get_column_count(meta)
     if meta["quarto-cheatsheet-pdf"] and meta["quarto-cheatsheet-pdf"].numcols then
         local val = pandoc.utils.stringify(meta["quarto-cheatsheet-pdf"].numcols)
@@ -77,7 +87,9 @@ function Doc(body)
     local page_blocks = {}
     local col_heights = {}
     column_count = get_column_count(body.meta)
-    
+    print("Column count detected:", column_count)
+    print("Cheat blocks count:", #blocks)
+
     for i = 1, column_count do
         col_heights[i] = 0
         page_blocks[i] = {}
