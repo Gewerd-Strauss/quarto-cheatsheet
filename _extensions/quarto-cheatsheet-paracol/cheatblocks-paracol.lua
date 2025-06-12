@@ -1,3 +1,4 @@
+-- paracol lua filter
 local column_count = 3
 local max_height = 700
 local blocks = {}
