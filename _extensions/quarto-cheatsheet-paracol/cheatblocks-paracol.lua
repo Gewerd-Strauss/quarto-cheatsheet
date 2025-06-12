@@ -1,18 +1,16 @@
 local column_count = 4
 local use_paracol = true
 local cheat_fontsize = "small"
+local cheattitle_fontsize = "small"
 local blocks = {}
 
 function Meta(meta)
   local fmt = meta['quarto-cheatsheet-paracol-pdf'] or meta['quarto-cheatsheet-pdf']
-  print(meta["numcols"]) -- this prints the actual string I provide in the YAML
-  print(column_count) -- this prints hte current value of `column_count` - which is the `local column_count = 4`
   cheat_fontsize = meta['cheat-fontsize']
-  print(cheat_fontsize)
+  cheattitle_fontsize = meta['cheattitle-fontsize']
   column_count = 3 -- this successfully overwrites 
   column_count = tonumber(pandoc.utils.stringify(meta["numcols"]))
 
-  print(column_count) -- this line to print nil.
   if fmt then
     local n= tonumber(fmt.numcols)
     if n then column_count = n end
@@ -48,7 +46,12 @@ function Pandoc(doc)
       local c = pandoc.write(pandoc.Pandoc(b.content), "latex")
       local fontsize_str = pandoc.utils.stringify(cheat_fontsize)
       local fontcmd = "\\" .. fontsize_str:lower()  -- converts "HUGE" to "\huge" (and equivalents) (LaTeX command) 
-      local box = string.format("\\begin{tcolorbox}[cheatbox, fontupper={%s},title={%s}]\n%s\n\\end{tcolorbox}",  fontcmd,t, c)
+      local fontsizetitle_str = pandoc.utils.stringify(cheattitle_fontsize)
+      local fonttitlecmd = "\\" .. fontsizetitle_str:lower()  -- converts "HUGE" to "\huge" (and equivalents) (LaTeX command) 
+      local box = string.format(
+        "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}]\n%s\n\\end{tcolorbox}",
+        fontcmd, fonttitlecmd, t, c
+      )
       table.insert(out, pandoc.RawBlock("latex", box))
     end
   end

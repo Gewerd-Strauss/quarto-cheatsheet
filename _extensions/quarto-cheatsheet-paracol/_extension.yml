@@ -28,6 +28,7 @@ contributes:
       date-format: "DD.MM.YYYY"
       linkcolor: black
       cheat-fontsize: "\\scriptsize"
+      cheattitle-fontsize: "\\scriptsize"
       cheat-vspace-above: "-4pt"
       cheat-vspace-below: "6pt"
       body-fontsize: "\\footnotesize"
