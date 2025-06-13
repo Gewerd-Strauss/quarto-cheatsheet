@@ -1,0 +1,45 @@
+% in-header.tex
+% Load required packages (only once)
+\usepackage{paracol}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings, skins, breakable}
+\usepackage{tikz}
+\usepackage{etoolbox}
+
+% Define tcolorbox style
+\tcbset{
+  cheatbox/.style={
+    enhanced,
+    sharp corners,
+    colback=white,
+    colframe=black,
+    coltitle=white,
+    colbacktitle=black,
+    fonttitle=\bfseries\small,
+    boxrule=0.5pt,
+    breakable,
+    title={},
+    leftrule=0.75mm,
+    rightrule=0.25mm,
+    toprule=0.25mm,
+    bottomrule=0.25mm,
+    top=4pt,
+    bottom=4pt,
+    left=6pt,
+    right=6pt,
+    after skip=6pt,
+    before skip=6pt,
+  }
+}
+
+% Define column-handling commands
+\newcommand{\StartCheatColumns}[1]{\begin{paracol}{#1}}
+\newcommand{\EndCheatColumns}{\end{paracol}}
+
+% Legacy or alternative environment, if used anywhere
+\newenvironment{cheatboxparacol}{
+  \par\vspace{2pt}\noindent
+  \begin{tcolorbox}[cheatbox]
+}{
+  \end{tcolorbox}\vspace{2pt}
+}
