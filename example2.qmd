@@ -6,7 +6,8 @@ format:
     keep-tex: true
     latex-auto-mk: true
     latex-auto-install: true
-    cheat-fontsize: tiny
+    cheat-fontsize: scriptsize
+    cheattitle-fontsize: tiny
     body-fontsize: small
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
@@ -25,6 +26,13 @@ format:
     textcolor: "000000"
 ---
 
+## Normal Body Text
+## Normal Body Text
+## Normal Body Text
+## Normal Body Text
+## Normal Body Text
+## Normal Body Text
+## Normal Body Text
 
 
 ::: {.cheat title="Rekursion (1.1)" column="1"}
