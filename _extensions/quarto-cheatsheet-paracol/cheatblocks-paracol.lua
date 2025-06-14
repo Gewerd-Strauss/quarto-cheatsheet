@@ -32,10 +32,21 @@ function Pandoc(doc)
   local cols = {}
   for i=1,column_count do cols[i]={} end
   local idx=1
+  -- for _,b in ipairs(blocks) do
+  --   table.insert(cols[idx],b)
+  --   idx = idx % column_count + 1
+  -- end
   for _,b in ipairs(blocks) do
-    table.insert(cols[idx],b)
-    idx = idx % column_count + 1
+    local col_idx = tonumber(b.attributes.column)
+    if col_idx == nil then
+      col_idx = idx
+      idx = idx % column_count + 1
+    else
+      col_idx = math.min(math.max(col_idx, 1), column_count)  -- clamp between 1 and column_count
+    end
+    table.insert(cols[col_idx], b)
   end
+
 
   local out = {}
   table.insert(out, pandoc.RawBlock("latex", "\\begin{paracol}{"..column_count.."}"))
