@@ -4,15 +4,26 @@ local cheat_fontsize = "small"
 local cheattitle_fontsize = "small"
 local blocks = {}
 
+local color_by_key = {}
+
+-- list of classes/attributes to exclude (still exclude those)
+local exclude = {
+  cheat=true,
+  title=true,
+  column=true,
+  colframe=true,
+  colback=true,
+}
+
 function Meta(meta)
   local fmt = meta['quarto-cheatsheet-paracol-pdf'] or meta['quarto-cheatsheet-pdf']
   cheat_fontsize = meta['cheat-fontsize']
   cheattitle_fontsize = meta['cheattitle-fontsize']
-  column_count = 3 -- this successfully overwrites 
-  column_count = tonumber(pandoc.utils.stringify(meta["numcols"]))
+  column_count = 3 -- default
+  column_count = tonumber(pandoc.utils.stringify(meta["numcols"])) or column_count
 
   if fmt then
-    local n= tonumber(fmt.numcols)
+    local n = tonumber(fmt.numcols)
     if n then column_count = n end
     use_paracol = fmt['use-paracol']=='true'
   end
@@ -21,6 +32,39 @@ end
 
 function Div(el)
   if el.classes:includes("cheat") then
+    local keyclass = nil
+    -- find first class matching /^color-.*$/
+    for _, c in ipairs(el.classes) do
+      if string.match(c, "^color%-") then
+        keyclass = c
+        break
+      end
+    end
+
+    local colback = el.attributes.colback
+    local colframe = el.attributes.colframe
+
+    if keyclass then
+      if (colback and colback ~= "") or (colframe and colframe ~= "") then
+        -- store colors for this keyclass
+        color_by_key[keyclass] = {
+          colback = colback,
+          colframe = colframe
+        }
+      else
+        -- fill missing colback/colframe from stored colors
+        local stored = color_by_key[keyclass]
+        if stored then
+          if (not colback or colback == "") and stored.colback then
+            el.attributes.colback = stored.colback
+          end
+          if (not colframe or colframe == "") and stored.colframe then
+            el.attributes.colframe = stored.colframe
+          end
+        end
+      end
+    end
+
     table.insert(blocks, el)
     return {}
   end
@@ -58,7 +102,6 @@ function Pandoc(doc)
       local fontsizetitle_str = pandoc.utils.stringify(cheattitle_fontsize)
       local fonttitlecmd = "\\" .. fontsizetitle_str:lower()
 
-      -- Prepare color options for tcolorbox
       local color_opts = ""
       if colback ~= "" then color_opts = color_opts .. "colback=" .. colback .. "," end
       if colframe ~= "" then color_opts = color_opts .. "colframe=" .. colframe .. "," end

@@ -26,10 +26,10 @@ format:
     - right=0.2cm
     - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
-    nodecolor: "FF5733"
-    linecolor: "C70039"
+    nodecolor: "FFFFFF"
+    linecolor: "FFFFFF"
     headcolor: "FFFFFF"
-    textcolor: "000000"
+    textcolor: "FFFFFF"
 ---
 
 ## Normal Body Text
@@ -41,7 +41,7 @@ format:
 ## Normal Body Text
 
 
-::: {.cheat title="Rekursion (1.1)" column="1"}
+::: {.cheat title="Rekursion (1.1)" .color-rek column="1" colframe="red!100!red" colback="green!20!orange"}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -51,7 +51,7 @@ def factorial(n):
     return 1 if n == 0 else n * factorial(n-1)
 ```
 :::
-::: {.cheat title="Rekursion (1.2)" column="1"}
+::: {.cheat title="Rekursion (1.2)" column="1" .color-test}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.
 
 Beispiel in Python:
@@ -74,7 +74,7 @@ def factorial(n):
 :::
 
 
-::: {.cheat title="Datenstrukturen (2.1)" column="2"}
+::: {.cheat title="Datenstrukturen (2.1)" column="2" .color-test colframe="green!100!green"}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -94,7 +94,7 @@ print(f(4))  # 16
 ## title3
 
 
-::: {.cheat title="Datenstrukturen (2.3)" column="2"}
+::: {.cheat title="Datenstrukturen (2.3)" column="2"  .color-test}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
@@ -191,7 +191,7 @@ def factorial(n):
 
 
 
-::: {.cheat title="Datenstrukturen (2.5)" column="2"}
+::: {.cheat title="Datenstrukturen (2.5)" column="2" .color-rek}
 Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 
 - Liste: `[1, 2, 3]`
