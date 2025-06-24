@@ -16,23 +16,65 @@ $endif$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
-\title{$title$}
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
 
-\newcommand{\Author}{$for(author)$$author$$sep$, $endfor$}
+%%%% //FOOTER SETUP %%%%
+% Define \Title only if title is present, else empty
+$if(title)$
 \newcommand{\Title}{$title$}
-\newcommand{\LastModified}{$date$}
+$else$
+\newcommand{\Title}{}
+$endif$
 
-\AtBeginDocument{%
-  \pagestyle{fancy}
+% Define \Author only if author is present, else empty
+$if(author)$
+\newcommand{\Author}{$for(author)$'$author$'$sep$, $endfor$}
+$else$
+\newcommand{\Author}{}
+$endif$
+
+% Define \LastModified only if date is present, else empty
+$if(date)$
+\newcommand{\LastModified}{$date$}
+$else$
+\newcommand{\LastModified}{}
+$endif$
+
+% Helper macro for left footer, uses etoolbox \ifdefempty
+\newcommand{\LeftFooter}{%
+\ifboolexpr{
+  test {\ifdefempty{\Title}} 
+  and
+  test {\ifdefempty{\LastModified}}
+  }
+  { % both empty
+  % print nothing
+  }
+  { % at least one nonempty
+  \ifdefempty{\Title}
+  {\LastModified} % Title empty, print date only
+  { % Title nonempty
+  \ifdefempty{\LastModified}
+  {\Title} % date empty, print title only
+  {\Title{} -- \LastModified} % both present, join with --
+  }
+  }
+  }
   
-  % clear all headers and footers
-  \fancyhf{}%
-  % \fancyhead[L]{\textit{\Title} -- \LastModified}
-  % \fancyhead[R]{\textit{by '\Author'}}
-  % \fancyhead[C]{\thepage}
-  \fancyfoot[L]{\textit{\Title} -- \LastModified}
-  \fancyfoot[R]{\textit{by '\Author'}}
+  \AtBeginDocument{%
+  \pagestyle{fancy}
+  \fancyhf{}% clear all headers/footers
+  
+  % Left footer only if LeftFooter nonempty
+  \ifdefempty{\LeftFooter}{}{%
+  \fancyfoot[L]{\textit{\LeftFooter}}%
+  }
+  
+  % Right footer only if \Author nonempty
+  \ifdefempty{\Author}{}{%
+  \fancyfoot[R]{\textit{by \Author}}%
+  }
+  
   \fancyfoot[C]{\thepage}
-}
+  }
+  
+%%%% FOOTER SETUP\\ %%%%

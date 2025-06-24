@@ -1,7 +1,11 @@
 ---
 title: "Beispiel-CheatSheet"
-author: Gewerd-Strauss
-date: last-modified
+date: now
+date-format: YYYY-MM-DD HH:mm:ss
+author: 
+  - Gewerd-Strauss
+  - Galdera-the-Fallen
+  - Zero III
 format:
   quarto-cheatsheet-paracol-pdf:
     highlight-style: none
