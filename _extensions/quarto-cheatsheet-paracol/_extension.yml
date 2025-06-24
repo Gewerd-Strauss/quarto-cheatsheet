@@ -9,7 +9,6 @@ contributes:
         - cheatblocks-paracol.lua
       include-in-header:
         - in-header.tex
-        - in-header.tex
       template-partials: 
         - before-body.tex
         - after-body.tex

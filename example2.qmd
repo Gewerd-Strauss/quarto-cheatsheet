@@ -1,5 +1,7 @@
 ---
-# title: "Beispiel-CheatSheet"
+title: "Beispiel-CheatSheet"
+author: Gewerd-Strauss
+date: last-modified
 format:
   quarto-cheatsheet-paracol-pdf:
     highlight-style: none

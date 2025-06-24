@@ -13,3 +13,26 @@ $endif$
 $if(quarto-cheatsheet-pdf.page-margins)$
 \geometry{$quarto-cheatsheet-pdf.page-margins$}
 $endif$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+\title{$title$}
+\author{$for(author)$$author$$sep$ \and $endfor$}
+\date{$date$}
+
+\newcommand{\Author}{$for(author)$$author$$sep$, $endfor$}
+\newcommand{\Title}{$title$}
+\newcommand{\LastModified}{$date$}
+
+\AtBeginDocument{%
+  \pagestyle{fancy}
+  
+  % clear all headers and footers
+  \fancyhf{}%
+  % \fancyhead[L]{\textit{\Title} -- \LastModified}
+  % \fancyhead[R]{\textit{by '\Author'}}
+  % \fancyhead[C]{\thepage}
+  \fancyfoot[L]{\textit{\Title} -- \LastModified}
+  \fancyfoot[R]{\textit{by '\Author'}}
+  \fancyfoot[C]{\thepage}
+}
