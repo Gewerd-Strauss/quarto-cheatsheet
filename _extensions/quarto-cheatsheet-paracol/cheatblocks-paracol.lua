@@ -32,21 +32,17 @@ function Pandoc(doc)
   local cols = {}
   for i=1,column_count do cols[i]={} end
   local idx=1
-  -- for _,b in ipairs(blocks) do
-  --   table.insert(cols[idx],b)
-  --   idx = idx % column_count + 1
-  -- end
+
   for _,b in ipairs(blocks) do
     local col_idx = tonumber(b.attributes.column)
     if col_idx == nil then
       col_idx = idx
       idx = idx % column_count + 1
     else
-      col_idx = math.min(math.max(col_idx, 1), column_count)  -- clamp between 1 and column_count
+      col_idx = math.min(math.max(col_idx, 1), column_count)
     end
     table.insert(cols[col_idx], b)
   end
-
 
   local out = {}
   table.insert(out, pandoc.RawBlock("latex", "\\begin{paracol}{"..column_count.."}"))
@@ -54,14 +50,22 @@ function Pandoc(doc)
     if i>1 then table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn")) end
     for _,b in ipairs(cols[i]) do
       local t = b.attributes.title or ""
-      local c = pandoc.write(pandoc.Pandoc(b.content), "latex")
+      local colback = b.attributes.colback or ""
+      local colframe = b.attributes.colframe or ""
+
       local fontsize_str = pandoc.utils.stringify(cheat_fontsize)
-      local fontcmd = "\\" .. fontsize_str:lower()  -- converts "HUGE" to "\huge" (and equivalents) (LaTeX command) 
+      local fontcmd = "\\" .. fontsize_str:lower()
       local fontsizetitle_str = pandoc.utils.stringify(cheattitle_fontsize)
-      local fonttitlecmd = "\\" .. fontsizetitle_str:lower()  -- converts "HUGE" to "\huge" (and equivalents) (LaTeX command) 
+      local fonttitlecmd = "\\" .. fontsizetitle_str:lower()
+
+      -- Prepare color options for tcolorbox
+      local color_opts = ""
+      if colback ~= "" then color_opts = color_opts .. "colback=" .. colback .. "," end
+      if colframe ~= "" then color_opts = color_opts .. "colframe=" .. colframe .. "," end
+
       local box = string.format(
-        "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}]\n%s\n\\end{tcolorbox}",
-        fontcmd, fonttitlecmd, t, c
+        "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]\n%s\n\\end{tcolorbox}",
+        fontcmd, fonttitlecmd, t, color_opts, pandoc.write(pandoc.Pandoc(b.content), "latex")
       )
       table.insert(out, pandoc.RawBlock("latex", box))
     end
