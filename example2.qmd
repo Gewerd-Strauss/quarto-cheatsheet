@@ -8,7 +8,7 @@ author:
   - Zero III
 format:
   quarto-cheatsheet-paracol-pdf:
-    highlight-style: none
+    highlight-style: pygments
     keep-tex: true
     latex-auto-mk: true
     latex-auto-install: true
@@ -26,10 +26,10 @@ format:
     - right=0.2cm
     - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
-    nodecolor: "FFFFFF"
-    linecolor: "FFFFFF"
+    nodecolor: "FF5733"
+    linecolor: "C70039"
     headcolor: "FFFFFF"
-    textcolor: "FFFFFF"
+    textcolor: "000000"
 ---
 
 ## Normal Body Text
@@ -265,11 +265,20 @@ Listen, Mengen und Dictionaries sind grundlegende Datenstrukturen.
 - Dictionary: `{"a": 1, "b": 2}`
 :::
 
-::: {.cheat title="Lambda-Funktionen (6.13)" column="6"}
-Anonyme Funktionen:
+
+```{r}
+library(ggplot2)
+DD = head(mtcars[, 1:4])
+AA = plot(1:10, (1:10)^2, main="Testplot", xlab="x", ylab="x²")
+BB = ggplot(data.frame(x=1:10, y=(1:10)^2), aes(x, y)) + geom_point() + ggtitle("Testplot mit ggplot2")
 
 ```
-f = lambda x: x * x
-print(f(4))  # 16
-```
+::: {.cheat title="A table (6.13)" column="6"}
+Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-codeblock ausführen kannst; sondern nur inline r. 
+`r knitr::kable(DD, format="latex")`
+`r AA`
+`r print(BB)`
+
+
+
 :::

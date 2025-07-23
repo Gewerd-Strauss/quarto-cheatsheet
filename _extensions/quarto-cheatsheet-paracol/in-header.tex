@@ -6,6 +6,8 @@
 \usepackage{tikz}
 \usepackage{etoolbox}
 \usepackage{fancyhdr}
+\usepackage{listings}  % Added listings for syntax highlighting
+\usepackage{xcolor}    % for custom colors in listings
 
 % Define tcolorbox style
 \tcbset{
@@ -43,4 +45,22 @@
   \begin{tcolorbox}[cheatbox]
 }{
   \end{tcolorbox}\vspace{2pt}
+}
+
+% Define Shaded environment for highlighting
+\newtcolorbox[auto counter, number within=section]{Shaded}[2][]{colback=gray!20!white, colframe=black, sharp corners, title=#2,#1}
+
+% Configure listings package
+\lstset{ 
+  backgroundcolor=\color{gray!20},   % background color
+  basicstyle=\ttfamily\footnotesize,   % font style
+  keywordstyle=\color{blue}\bfseries,  % keyword color
+  commentstyle=\color{green!60!black},% comment color
+  stringstyle=\color{red},             % string color
+  showstringspaces=false,              % don't show spaces as underscores
+  breaklines=true,                     % auto-break lines
+  breakatwhitespace=true,
+  captionpos=b,                        % bottom caption
+  frame=single,                        % single frame around code
+  rulecolor=\color{black},             % rule color
 }
