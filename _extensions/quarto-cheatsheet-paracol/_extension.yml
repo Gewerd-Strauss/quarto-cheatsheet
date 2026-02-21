@@ -9,13 +9,14 @@ contributes:
         - cheatblocks-paracol.lua
       include-in-header:
         - in-header.tex
-        - in-header.tex
       template-partials: 
         - before-body.tex
         - after-body.tex
     quarto-cheatsheet-pdf:
+      latex-auto-install: true
       inherits: pdf
       documentclass: article
+      pdf-engine: xelatex
       geometry: 
         - a4paper
         - bottom=78mm

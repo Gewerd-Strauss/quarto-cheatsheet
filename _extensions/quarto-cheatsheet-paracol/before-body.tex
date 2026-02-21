@@ -13,3 +13,70 @@ $endif$
 $if(quarto-cheatsheet-pdf.page-margins)$
 \geometry{$quarto-cheatsheet-pdf.page-margins$}
 $endif$
+$if(has-frontmatter)$
+\mainmatter
+$endif$
+
+%%%% //FOOTER SETUP %%%%
+% Define \Title only if title is present, else empty
+$if(title)$
+\newcommand{\Title}{$title$}
+$else$
+\newcommand{\Title}{}
+$endif$
+
+% Define \Author only if author is present, else empty
+$if(author)$
+\newcommand{\Author}{$for(author)$'$author$'$sep$, $endfor$}
+$else$
+\newcommand{\Author}{}
+$endif$
+
+% Define \LastModified only if date is present, else empty
+$if(date)$
+\newcommand{\LastModified}{$date$}
+$else$
+\newcommand{\LastModified}{}
+$endif$
+
+% Helper macro for left footer, uses etoolbox \ifdefempty
+\newcommand{\LeftFooter}{%
+\ifboolexpr{
+  test {\ifdefempty{\Title}} 
+  and
+  test {\ifdefempty{\LastModified}}
+  }
+  { % both empty
+  % print nothing
+  }
+  { % at least one nonempty
+  \ifdefempty{\Title}
+  {\LastModified} % Title empty, print date only
+  { % Title nonempty
+  \ifdefempty{\LastModified}
+  {\Title} % date empty, print title only
+  {\Title{} -- \LastModified} % both present, join with --
+  }
+  }
+  }
+  
+  \AtBeginDocument{%
+  \pagestyle{fancy}
+  \renewcommand{\headrulewidth}{0pt}
+
+  \fancyhf{}% clear all headers/footers
+  
+  % Left footer only if LeftFooter nonempty
+  \ifdefempty{\LeftFooter}{}{%
+  \fancyfoot[L]{\textit{\LeftFooter}}%
+  }
+  
+  % Right footer only if \Author nonempty
+  \ifdefempty{\Author}{}{%
+  \fancyfoot[R]{\textit{by \Author}}%
+  }
+  
+  \fancyfoot[C]{\thepage}
+  }
+  
+%%%% FOOTER SETUP\\ %%%%

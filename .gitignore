@@ -1,7 +1,10 @@
-example_files
-example.html
+example2.html
+example2.tex
+example2_files
 /.luarc.json
 .Rproj.user
 .Rhistory
 .directory
 *.pdf
+*.aux
+*.log
