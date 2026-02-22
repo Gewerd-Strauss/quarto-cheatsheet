@@ -1,13 +1,21 @@
 ---
 title: Quarto Cheatsheet
 format:
-   quarto-cheatsheet-pdf
+  quarto-cheatsheet-multicols-pdf:
+    numcols: 1
+    nodecolor: "FF5733"
+    linecolor: "C70039"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
 ---
 
 # Formeln
 
-:::{.cheat title="PQ"}
+:::{.cheat title="DEPRECATED"}
 $x = \frac{-q \pm \sqrt{q^2 - 4pq}}{2p}$
+The `multicols`-branch of the extension is **deprecated**; this branch only remains for potential future reference. 
+It is **not up to date**, likely not implemented well and **should not be used** to build any actual cheatsheet.
+For that, install the extension fron main branch instead.
 :::
 
 
