@@ -7,7 +7,7 @@ author:
   - Galdera-the-Fallen
   - Zero III
 format:
-  quarto-cheatsheet-paracol-pdf:
+  quarto-cheatsheet-pdf:
     highlight-style: pygments
     keep-tex: true
     latex-auto-mk: true
@@ -280,7 +280,8 @@ Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-co
 2. b `r BB`
 3. c `r 1+2`
 4. d \includegraphics[width=\linewidth]{BB-testplot.pdf}
-5. `r knitr::kable(DD, format="latex")`
+5. e `r knitr::kable(DD, format="latex")`
+6. f `r 1+2`
 
 
 :::
