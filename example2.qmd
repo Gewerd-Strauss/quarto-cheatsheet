@@ -277,7 +277,7 @@ ggsave("BB-testplot.pdf", BB, width = 4, height = 3)
 Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-codeblock ausführen kannst; sondern nur inline r. 
 
 1. a `r print(1+2)`
-2. b `r BB`
+2. b `r "DD"`
 3. c `r 1+2`
 4. d \includegraphics[width=\linewidth]{BB-testplot.pdf}
 5. e `r knitr::kable(DD, format="latex")`
