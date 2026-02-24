@@ -33,6 +33,11 @@ end
 function Div(el)
   if el.classes:includes("cheat") then
     local keyclass = nil
+    if el.classes:includes("breakable") then
+      el.attributes.breakable = "true"
+    else
+      el.attributes.breakable = "false"
+    end
     -- find first class matching /^color-.*$/
     for _, c in ipairs(el.classes) do
       if string.match(c, "^color%-") then
@@ -96,7 +101,7 @@ function Pandoc(doc)
       local t = b.attributes.title or ""
       local colback = b.attributes.colback or ""
       local colframe = b.attributes.colframe or ""
-      local breakable = b.attributes.breakable
+      local breakable = b.attributes.breakable or false
 
       local fontsize_str = pandoc.utils.stringify(cheat_fontsize)
       local fontcmd = "\\" .. fontsize_str:lower()
