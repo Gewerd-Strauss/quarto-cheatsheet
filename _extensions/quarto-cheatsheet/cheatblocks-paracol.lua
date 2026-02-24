@@ -38,6 +38,11 @@ function Div(el)
     else
       el.attributes.breakable = "false"
     end
+    if el.classes:includes("pushnext") then
+      el.attributes.pushnext = "true"
+    else
+      el.attributes.pushnext = "false"
+    end
     -- find first class matching /^color-.*$/
     for _, c in ipairs(el.classes) do
       if string.match(c, "^color%-") then
@@ -100,6 +105,7 @@ function Pandoc(doc)
     for _,b in ipairs(cols[i]) do
       local t = b.attributes.title or ""
       local colback = b.attributes.colback or ""
+      local pushnext = b.attributes.pushnext or false
       local colframe = b.attributes.colframe or ""
       local breakable = b.attributes.breakable or false
 
@@ -115,6 +121,9 @@ function Pandoc(doc)
       if breakable == "true" then extra_opts = extra_opts .. "breakable," end
       
       local box_opts = color_opts .. extra_opts
+      if pushnext == "true" then
+        table.insert(out, pandoc.RawBlock("latex", "\\par\\penalty -10000\\relax"))
+      end
       local box = string.format(
         "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]\n%s\n\\end{tcolorbox}",
         fontcmd, fonttitlecmd, t, box_opts, pandoc.write(pandoc.Pandoc(b.content), "latex")
