@@ -96,19 +96,23 @@ function Pandoc(doc)
       local t = b.attributes.title or ""
       local colback = b.attributes.colback or ""
       local colframe = b.attributes.colframe or ""
+      local breakable = b.attributes.breakable
 
       local fontsize_str = pandoc.utils.stringify(cheat_fontsize)
       local fontcmd = "\\" .. fontsize_str:lower()
       local fontsizetitle_str = pandoc.utils.stringify(cheattitle_fontsize)
       local fonttitlecmd = "\\" .. fontsizetitle_str:lower()
 
+      local extra_opts = ""
       local color_opts = ""
       if colback ~= "" then color_opts = color_opts .. "colback=" .. colback .. "," end
       if colframe ~= "" then color_opts = color_opts .. "colframe=" .. colframe .. "," end
-
+      if breakable == "true" then extra_opts = extra_opts .. "breakable," end
+      
+      local box_opts = color_opts .. extra_opts
       local box = string.format(
         "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]\n%s\n\\end{tcolorbox}",
-        fontcmd, fonttitlecmd, t, color_opts, pandoc.write(pandoc.Pandoc(b.content), "latex")
+        fontcmd, fonttitlecmd, t, box_opts, pandoc.write(pandoc.Pandoc(b.content), "latex")
       )
       table.insert(out, pandoc.RawBlock("latex", box))
     end
