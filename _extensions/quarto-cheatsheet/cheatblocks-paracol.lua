@@ -124,11 +124,22 @@ function Pandoc(doc)
       if pushnext == "true" then
         table.insert(out, pandoc.RawBlock("latex", "\\par\\penalty -10000\\relax"))
       end
-      local box = string.format(
-        "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]\n%s\n\\end{tcolorbox}",
-        fontcmd, fonttitlecmd, t, box_opts, pandoc.write(pandoc.Pandoc(b.content), "latex")
-      )
-      table.insert(out, pandoc.RawBlock("latex", box))
+      -- ensure content is placed as-is, so that quarto-features can be processed correctly.
+      table.insert(out, pandoc.RawBlock("latex",
+        string.format(
+          "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]",
+          fontcmd, fonttitlecmd, t, box_opts
+        )
+      ))
+
+      -- insert ORIGINAL blocks (so callouts are preserved)
+      for _, inner in ipairs(b.content) do
+        table.insert(out, inner)
+      end
+
+      -- end box
+      table.insert(out, pandoc.RawBlock("latex", "\\end{tcolorbox}"))
+      -- table.insert(out, pandoc.RawBlock("latex", box))
     end
   end
   table.insert(out, pandoc.RawBlock("latex", "\\end{paracol}"))
