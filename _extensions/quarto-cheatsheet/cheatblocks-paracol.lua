@@ -33,6 +33,9 @@ end
 function Div(el)
   if el.classes:includes("cheat") then
     local keyclass = nil
+    if el.classes:includes("hidden") then
+      return {} -- remove block completely
+    end
     if el.classes:includes("breakable") then
       el.attributes.breakable = "true"
     else
