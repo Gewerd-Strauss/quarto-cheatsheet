@@ -6,6 +6,14 @@ example2_files
 .Rhistory
 .directory
 *.pdf
+*.html
+*.tex
 *.aux
 *.log
 /dev/
+
+/.quarto/
+**/*.quarto_ipynb
+/_freeze/
+/_site/
+/site_libs/
