@@ -1,0 +1,64 @@
+project:
+  type: website
+  execute-dir: project
+  output-dir: _site
+  # for render-targets, see profile configs '_quarto-default' and '_quarto-dev'
+  render: 
+    - index.qmd
+    - "tests/"
+execute:
+  freeze: auto
+profile:
+  default: default
+website:
+  search: true
+  sidebar:
+    style: "docked"
+    search: true
+    contents: 
+      - text: "Landing"
+        href: index.qmd
+      - section: "tests"
+        href: "tests/index.qmd"
+        contents: 
+          # - "!tests/index.qmd"
+          - auto: "tests/*.qmd"
+format: 
+  html:
+    author: Gewerd Strauss
+    code-line-numbers: true
+    citations-hover: FALSE
+    crossrefs-hover: TRUE
+    footnotes-hover: TRUE
+    citation-location: margin
+    fig-cap-location: margin
+    reference-location: document
+    tbl-cap-location: margin
+    code-fold: TRUE
+    code-overflow: scroll
+    crossref:
+      fig-prefix: fig.
+      fig-title: Figure
+      tbl-prefix: tbl.
+      tbl-title: Table
+      appendix-title: "App."
+      appendix-delim: ":"
+    csl: .pandoc/apa.csl
+    date-format: DD.MM.YYYY
+    date: last-modified
+    df-print: paged
+    embed-resources: false
+    fig-height: 6
+    fig-title: Figure
+    fig-width: 8
+    link-external-icon: false
+    link-external-newwindow: TRUE
+    number-depth: 2
+    number-sections: TRUE
+    theme: cosmo
+    toc-depth: 3
+    toc-location: right
+    toc-title: Table of Contents
+    toc: true
+  quarto-cheatsheet-paracol-pdf:
+    author: Gewerd Strauss
