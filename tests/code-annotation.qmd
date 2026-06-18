@@ -1,6 +1,8 @@
 ---
 title: "feature-test: code-annotation"
-author: Gewerd Strauss
+date: now
+author: 
+  - Gewerd Strauss
 format:
   quarto-cheatsheet-pdf:
     highlight-style: none

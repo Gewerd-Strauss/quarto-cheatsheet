@@ -14,11 +14,10 @@ format:
     latex-auto-install: true
     cheat-fontsize: scriptsize
     cheattitle-fontsize: tiny
-    body-fontsize: small
+    footnote-fontsize: tiny
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
     numcols: 3
-    use-paracol: true
     geometry:
     - top=1.5cm
     - bottom=1.5cm
@@ -30,6 +29,8 @@ format:
     linecolor: "C70039"
     headcolor: "FFFFFF"
     textcolor: "000000"
+    # testarg: 42069    # these arguments must all be set in the document, because they
+                        # cannot be set in the extension's metadata. 
 ---
 
 ## Normal Body Text
