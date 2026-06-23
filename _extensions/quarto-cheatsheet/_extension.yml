@@ -13,6 +13,7 @@ contributes:
         - before-body.tex
         - after-body.tex
         - tightlist.tex
+      page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
     quarto-cheatsheet-pdf:
       mermaid-format: png
       latex-auto-install: true
@@ -37,7 +38,6 @@ contributes:
       body-fontsize: "\\footnotesize"
       numcols: 1
       use-paracol: false
-      page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
       nodecolor: "185191"
       linecolor: "185191"
       headcolor: "FFFFFF"
