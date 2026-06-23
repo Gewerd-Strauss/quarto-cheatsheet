@@ -14,16 +14,19 @@ contributes:
         - after-body.tex
         - tightlist.tex
       page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
+      geometry: # cannot be moved into pdf
+        - bottom=1.5cm
+        - top=1.5cm
+        - left=0.2cm
+        - right=0.2cm
+        - landscape
+        - a4paper
     quarto-cheatsheet-pdf:
       mermaid-format: png
       latex-auto-install: true
       inherits: pdf
       documentclass: article
       pdf-engine: xelatex
-      geometry: 
-        - a4paper
-        - bottom=78mm
-        # - landscape
       keep-tex: false
       df-print: kable
       papersize: a4
