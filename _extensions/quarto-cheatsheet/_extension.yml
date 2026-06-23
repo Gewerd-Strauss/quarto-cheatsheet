@@ -22,18 +22,24 @@ contributes:
         - landscape
         - a4paper
     quarto-cheatsheet-pdf:
-      mermaid-format: png
-      latex-auto-install: true
       inherits: pdf
-      documentclass: article
-      pdf-engine: xelatex
       keep-tex: false
+      latex-auto-install: true
+      documentclass: article
       df-print: kable
-      papersize: a4
       code-line-numbers: true
-      lang: de
       date-format: "DD.MM.YYYY"
+      pdf-engine: xelatex
+      mermaid-format: png
+
+      papersize: a4
+      lang: de
+
       linkcolor: black
+      nodecolor: "185191"
+      linecolor: "185191"
+      headcolor: "FFFFFF"
+      textcolor: "000000"
       cheat-fontsize: "\\scriptsize"
       cheattitle-fontsize: "\\scriptsize"
       cheat-vspace-above: "-4pt"
@@ -41,7 +47,3 @@ contributes:
       body-fontsize: "\\footnotesize"
       numcols: 1
       use-paracol: false
-      nodecolor: "185191"
-      linecolor: "185191"
-      headcolor: "FFFFFF"
-      textcolor: "000000"
