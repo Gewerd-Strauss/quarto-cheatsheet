@@ -14,6 +14,7 @@ contributes:
         - after-body.tex
         - tightlist.tex
     quarto-cheatsheet-pdf:
+      mermaid-format: png
       latex-auto-install: true
       inherits: pdf
       documentclass: article
