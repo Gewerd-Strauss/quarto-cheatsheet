@@ -16,12 +16,17 @@ local exclude = {
 }
 
 function Meta(meta)
+
   local fmt = meta['quarto-cheatsheet-paracol-pdf'] or meta['quarto-cheatsheet-pdf']
   cheat_fontsize = meta['cheat-fontsize']
   cheattitle_fontsize = meta['cheattitle-fontsize']
   column_count = 3 -- default
-  column_count = tonumber(pandoc.utils.stringify(meta["numcols"])) or column_count
-
+  if meta["numcols"] ~= nil then
+    local n2 = tonumber(pandoc.utils.stringify(meta["numcols"]))
+    if n2 then 
+      column_count = n2
+    end
+  end
   if fmt then
     local n = tonumber(fmt.numcols)
     if n then column_count = n end
