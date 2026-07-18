@@ -1,0 +1,28 @@
+- [ ] HTML instance
+    - [ ] Prep
+        - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
+            - `filters/`
+                - `collect-cheats.lua`
+                    - read metadata
+                    - collect cheatblocks
+                    - assign columns
+                    - propagate colors
+                    - remove/don't add hidden blocks
+                - `render-pdf.lua`
+                    - handles pdf rendering pipeline
+                        - `paracol`
+                        - `tcolorbox`
+                - `render-html.lua`
+                    - handles html rendering pipeline
+                        - `<div class="cheatsheet">`
+
+            - `latex/`:
+                - `before-body.tex`
+                - `after-body.tex`
+                - `in-header.tex`
+                - `tightlist.tex`
+    - [ ] Implement HTML-instance:
+            - `html/`:
+                - `cheatsheet.css`
+                - `cheatsheet.js` (potentially)
+    - [ ]
