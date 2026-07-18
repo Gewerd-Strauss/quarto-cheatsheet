@@ -5,6 +5,7 @@ format:
     
 ---
 
+# Tasks
 - [ ] HTML instance
     - [ ] Prep
         - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
@@ -32,7 +33,66 @@ format:
             - `html/`:
                 - `cheatsheet.css`
                 - `cheatsheet.js` (potentially)
-    - [ ]
+    - [ ] Review validity of replacing common latex-commands with quarto natives
+        - [ ] columns
+        - [ ] images (cf. https://quarto.org/docs/authoring/figures.html#figure-basics and all subsections)
+            - consider that e.g the following seems to render correctly:
+
+            ````{qmd}
+            ::: {.cheat title='Kraftfeldkomponenten: Stretch-bend interaction' column=1 .color-kraftfeldkomponenten}
+            <!-- 21-24 -->
+            - _stretch_- und _bend_-Potential bekannt
+            - _stretch-bend Interaktion_: wird Winkel zu klein, kann Bindungslänge wachsen, um Platz zu schaffen
+            - Funktionale Form: 
+
+            $V_{sb}(r_1,r_2,\theta) = k_{sb}(k_1r_1+k_2r_2)\theta$
+            \vspace{-15pt}
+
+            :::: {layout='[ 0.33, 0.33, 0.33 ]'}
+            ::: {.column}
+            ![](res/vl03-stretch-bend-interaction-01.png)
+            :::
+            ::: {.column}
+            ![](res/vl03-stretch-bend-interaction-02.png)
+            :::
+            ::: {.column}
+            \end{figure} -->
+            ![Superimposition of how the.](res/vl03-stretch-bend-interaction-03.png)\
+            :::
+            ::::
+            \vspace{-17pt}
+            :::
+            ````
+
+            as well as this simplification
+
+            ````{qmd}
+            ::: {.cheat title='Kraftfeldkomponenten: Stretch-bend interaction' column=1 .color-kraftfeldkomponenten}
+            <!-- 21-24 -->
+            \tiny
+            \vspace{-2pt}
+            \tiny
+            - _stretch_- und _bend_-Potential bekannt
+            - _stretch-bend Interaktion_: wird Winkel zu klein, kann Bindungslänge wachsen, um Platz zu schaffen
+            - Funktionale Form: 
+
+            $V_{sb}(r_1,r_2,\theta) = k_{sb}(k_1r_1+k_2r_2)\theta$
+            \vspace{-15pt}
+
+            :::: {layout-ncol=3}
+            ![standard align](res/vl03-stretch-bend-interaction-01.png)
+
+            ![not enough room](res/vl03-stretch-bend-interaction-02.png)
+
+            ![Bindungslänge wird vergrößert](res/vl03-stretch-bend-interaction-03.png)
+            ::::
+
+            \vspace{-17pt}
+            :::
+            ````
+        - [ ] diagrams
+        
+
 
 
 
