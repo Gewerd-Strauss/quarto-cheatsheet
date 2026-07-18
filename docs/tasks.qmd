@@ -1,3 +1,10 @@
+---
+format: 
+  html:
+    html-math-method: mathjax
+    
+---
+
 - [ ] HTML instance
     - [ ] Prep
         - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
@@ -21,8 +28,86 @@
                 - `after-body.tex`
                 - `in-header.tex`
                 - `tightlist.tex`
-    - [ ] Implement HTML-instance:
+    - [ ] Implement HTML-instance
             - `html/`:
                 - `cheatsheet.css`
                 - `cheatsheet.js` (potentially)
     - [ ]
+
+
+
+# Latex in HTML
+
+- references:
+    - https://github.com/orgs/quarto-dev/discussions/4293
+    - potential resolve: https://github.com/wuqui/teximg
+    - another potential resolve: https://github.com/dialoa/imagify
+## Testing ground
+in-raw-latex-block:
+
+```{=latex}
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+```
+
+in-latex-enclosure
+
+$$
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+$$
+
+verbatim
+
+<
+
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+
+>
+
+
+::: {.content-hidden unless-format="html"}
+
+unless-html<
+
+$$
+\newcommand\mcy{{\mathcal{HIHI}}}
+\includegraphics[]{test.png}
+
+$$
+
+
+\>unless-html
+
+:::
+
+::: {.content-hidden unless-format="pdf"}
+
+unless-pdf<
+
+$$
+% \newcommand\mcy{{\mathcal{y}}}
+$$
+
+\>unless-pdf
+de
+
+:::
+
+Will this work? $\mcy = 3$.
+
+
+
+# Outlook on latex-heavy cheatsheets
+
+Latex beyond math-tex cannot be rendered in html, even with 
