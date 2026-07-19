@@ -1,0 +1,76 @@
+% in-header.tex
+% Load required packages (only once)
+\usepackage{paracol}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{listings, skins, breakable}
+\usepackage{tikz}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{listings}  % Added listings for syntax highlighting
+\usepackage{xcolor}    % for custom colors in listings
+\setlist[itemize]{
+  itemindent=8pt,
+  leftmargin=6pt,
+  rightmargin=2pt,
+  itemsep=0pt,
+  topsep=0pt,
+  % parskip=0pt,
+  parsep=0pt,
+  partopsep=0pt,
+  label=\textbullet
+}
+% Define tcolorbox style
+\tcbset{
+  cheatbox/.style={
+    enhanced,
+    sharp corners,
+    colback=white,
+    colframe=black,
+    coltitle=white,
+    colbacktitle=black,
+    fonttitle=\bfseries\small,
+    boxrule=0.5pt,
+    title={},
+    leftrule=0.75mm,
+    rightrule=0.25mm,
+    toprule=0.25mm,
+    bottomrule=0.25mm,
+    top=4pt,
+    bottom=4pt,
+    left=6pt,
+    right=6pt,
+    after skip=6pt,
+    before skip=6pt,
+  }
+}
+
+% Define column-handling commands
+\newcommand{\StartCheatColumns}[1]{\begin{paracol}{#1}}
+\newcommand{\EndCheatColumns}{\end{paracol}}
+
+% Legacy or alternative environment, if used anywhere
+\newenvironment{cheatboxparacol}{
+  \par\vspace{2pt}\noindent
+  \begin{tcolorbox}[cheatbox]
+}{
+  \end{tcolorbox}\vspace{2pt}
+}
+
+% Define Shaded environment for highlighting
+\newtcolorbox[auto counter, number within=section]{Shaded}[2][]{colback=gray!20!white, colframe=black, sharp corners, title=#2,#1}
+
+% Configure listings package
+\lstset{ 
+  backgroundcolor=\color{gray!20},   % background color
+  basicstyle=\ttfamily\footnotesize,   % font style
+  keywordstyle=\color{blue}\bfseries,  % keyword color
+  commentstyle=\color{green!60!black},% comment color
+  stringstyle=\color{red},             % string color
+  showstringspaces=false,              % don't show spaces as underscores
+  breaklines=true,                     % auto-break lines
+  breakatwhitespace=true,
+  captionpos=b,                        % bottom caption
+  frame=single,                        % single frame around code
+  rulecolor=\color{black},             % rule color
+}
