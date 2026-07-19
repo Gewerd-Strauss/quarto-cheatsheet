@@ -1,4 +1,5 @@
 ---
+title: simplifying extension architecture
 format: 
   html:
     html-math-method: mathjax
