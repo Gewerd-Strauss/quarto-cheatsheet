@@ -1,0 +1,95 @@
+title: quarto-cheatsheet
+author: Joe Slam, Gewerd Strauss
+version: 2.0.1
+quarto-required: ">=1.9.0"
+contributes:
+  formats:
+    html:
+      filters: 
+        - filters/collect-cheats.lua
+        - filters/render-html.lua
+    pdf:
+      filters: 
+        - filters/collect-cheats.lua
+        - filters/render-pdf.lua
+      include-in-header:
+        - in-header.tex
+      template-partials: 
+        - before-body.tex
+        - after-body.tex
+        - tightlist.tex
+      page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
+      geometry: # cannot be moved into pdf
+        - bottom=1.5cm
+        - top=1.5cm
+        - left=0.2cm
+        - right=0.2cm
+        - landscape
+        - a4paper
+    quarto-cheatsheet-pdf:
+      inherits: pdf
+      keep-tex: false
+      latex-auto-install: true
+      documentclass: article
+      df-print: kable
+      code-line-numbers: true
+      date-format: "DD.MM.YYYY"
+      pdf-engine: xelatex
+      mermaid-format: png
+
+      papersize: a4
+      lang: de
+
+      linkcolor: black
+      nodecolor: "185191"
+      linecolor: "185191"
+      headcolor: "FFFFFF"
+      textcolor: "000000"
+      cheat-fontsize: "\\scriptsize"
+      cheattitle-fontsize: "\\scriptsize"
+      cheat-vspace-above: "-4pt"
+      cheat-vspace-below: "6pt"
+      body-fontsize: "\\footnotesize"
+      numcols: 1
+      use-paracol: false
+    quarto-cheatsheet-html:
+      inherits: html
+      css: 
+        - html/cheatsheet.css
+      html-math-method: mathjax
+      toc: false
+
+      #### FONTS
+      # TODO: check these options
+      # mainfont: 
+      # monofont: 
+      # fontsize: 
+      # linestretch: 
+      fontcolor: "000000"
+      linkcolor: black
+
+
+
+      #### LAYOUT
+      fig-cap-location: bottom
+      tbl-cap-location: top
+
+
+      page-layout: full # TODO: check this option
+      appendix-style: default
+      title-block-style: default
+      title-block-banner: default
+      title-block-banner-color: body
+
+      # margin-left:
+      # margin-right:
+      # margin-top:
+      # margin-bottom:
+
+      #### CODE
+      code-fold: show
+      code-overflow: wrap
+      code-line-numbers: true
+      code-copy: true
+      # code-annotations: ?
+      code-block-border: F7342B
