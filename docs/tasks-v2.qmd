@@ -1,0 +1,179 @@
+---
+title: simplifying extension architecture
+format: 
+  html:
+    html-math-method: mathjax
+    
+---
+
+# Tasks
+- [ ] HTML instance
+    - [ ] Prep
+        - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
+            - `filters/`
+                - `collect-cheats.lua`
+                    - read metadata
+                    - collect cheatblocks
+                    - assign columns
+                    - propagate colors
+                    - remove/don't add hidden blocks
+                - `render-pdf.lua`
+                    - handles pdf rendering pipeline
+                        - `paracol`
+                        - `tcolorbox`
+                - `render-html.lua`
+                    - handles html rendering pipeline
+                        - `<div class="cheatsheet">`
+
+            - `latex/`:
+                - `before-body.tex`
+                - `after-body.tex`
+                - `in-header.tex`
+                - `tightlist.tex`
+    - [ ] Implement HTML-instance
+            - `html/`:
+                - `cheatsheet.css`
+                - `cheatsheet.js` (potentially)
+    - [ ] Review validity of replacing common latex-commands with quarto natives
+        - [ ] columns
+        - [ ] images (cf. https://quarto.org/docs/authoring/figures.html#figure-basics and all subsections)
+            - consider a filter that adds `{.lightbox}` to any figure (image or computational)
+                - can be toggled per-figure-level, or document wide. 
+                    - doc-wide: test if this works on figures declares in which various ways? 
+                - ref: https://quarto.org/docs/output-formats/html-lightbox-figures.html
+                    - also https://quarto.org/docs/authoring/figures.html#lightbox-figures
+            - consider that e.g the following seems to render correctly:
+
+            ````{qmd}
+            ::: {.cheat title='Kraftfeldkomponenten: Stretch-bend interaction' column=1 .color-kraftfeldkomponenten}
+            <!-- 21-24 -->
+            - _stretch_- und _bend_-Potential bekannt
+            - _stretch-bend Interaktion_: wird Winkel zu klein, kann Bindungslänge wachsen, um Platz zu schaffen
+            - Funktionale Form: 
+
+            $V_{sb}(r_1,r_2,\theta) = k_{sb}(k_1r_1+k_2r_2)\theta$
+            \vspace{-15pt}
+
+            :::: {layout='[ 0.33, 0.33, 0.33 ]'}
+            ::: {.column}
+            ![](res/vl03-stretch-bend-interaction-01.png)
+            :::
+            ::: {.column}
+            ![](res/vl03-stretch-bend-interaction-02.png)
+            :::
+            ::: {.column}
+            \end{figure} -->
+            ![Superimposition of how the.](res/vl03-stretch-bend-interaction-03.png)\
+            :::
+            ::::
+            \vspace{-17pt}
+            :::
+            ````
+
+            as well as this simplification
+
+            ````{qmd}
+            ::: {.cheat title='Kraftfeldkomponenten: Stretch-bend interaction' column=1 .color-kraftfeldkomponenten}
+            <!-- 21-24 -->
+            \tiny
+            \vspace{-2pt}
+            \tiny
+            - _stretch_- und _bend_-Potential bekannt
+            - _stretch-bend Interaktion_: wird Winkel zu klein, kann Bindungslänge wachsen, um Platz zu schaffen
+            - Funktionale Form: 
+
+            $V_{sb}(r_1,r_2,\theta) = k_{sb}(k_1r_1+k_2r_2)\theta$
+            \vspace{-15pt}
+
+            :::: {layout-ncol=3}
+            ![standard align](res/vl03-stretch-bend-interaction-01.png)
+
+            ![not enough room](res/vl03-stretch-bend-interaction-02.png)
+
+            ![Bindungslänge wird vergrößert](res/vl03-stretch-bend-interaction-03.png)
+            ::::
+
+            \vspace{-17pt}
+            :::
+            ````
+        - [ ] diagrams
+        
+
+
+
+
+# Latex in HTML
+
+- references:
+    - https://github.com/orgs/quarto-dev/discussions/4293
+    - potential resolve: https://github.com/wuqui/teximg
+    - another potential resolve: https://github.com/dialoa/imagify
+## Testing ground
+in-raw-latex-block:
+
+```{=latex}
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+```
+
+in-latex-enclosure
+
+$$
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+$$
+
+verbatim
+
+<
+
+\vspace{-23pt}
+\hspace{0pt}
+\begin{figure}
+\includegraphics[width=1.00\linewidth]{test.png}
+\end{figure}
+
+>
+
+
+::: {.content-hidden unless-format="html"}
+
+unless-html<
+
+$$
+\newcommand\mcy{{\mathcal{HIHI}}}
+\includegraphics[]{test.png}
+
+$$
+
+
+\>unless-html
+
+:::
+
+::: {.content-hidden unless-format="pdf"}
+
+unless-pdf<
+
+$$
+% \newcommand\mcy{{\mathcal{y}}}
+$$
+
+\>unless-pdf
+de
+
+:::
+
+Will this work? $\mcy = 3$.
+
+
+
+# Outlook on latex-heavy cheatsheets
+
+Latex beyond math-tex cannot be rendered in html, even with 
