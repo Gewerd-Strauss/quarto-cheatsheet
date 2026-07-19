@@ -1,0 +1,156 @@
+local column_count = 4
+local use_paracol = true
+local cheat_fontsize = "small"
+local cheattitle_fontsize = "small"
+local blocks = {}
+
+local color_by_key = {}
+
+-- list of classes/attributes to exclude (still exclude those)
+local exclude = {
+  cheat=true,
+  title=true,
+  column=true,
+  colframe=true,
+  colback=true,
+}
+
+function Meta(meta)
+
+  local fmt = meta['quarto-cheatsheet-paracol-pdf'] or meta['quarto-cheatsheet-pdf']
+  cheat_fontsize = meta['cheat-fontsize']
+  cheattitle_fontsize = meta['cheattitle-fontsize']
+  column_count = 3 -- default
+  if meta["numcols"] ~= nil then
+    local n2 = tonumber(pandoc.utils.stringify(meta["numcols"]))
+    if n2 then 
+      column_count = n2
+    end
+  end
+  if fmt then
+    local n = tonumber(fmt.numcols)
+    if n then column_count = n end
+    use_paracol = fmt['use-paracol']=='true'
+  end
+  return meta
+end
+
+function Div(el)
+  if el.classes:includes("cheat") then
+    local keyclass = nil
+    if el.classes:includes("hidden") then
+      return {} -- remove block completely
+    end
+    if el.classes:includes("breakable") then
+      el.attributes.breakable = "true"
+    else
+      el.attributes.breakable = "false"
+    end
+    if el.classes:includes("pushnext") then
+      el.attributes.pushnext = "true"
+    else
+      el.attributes.pushnext = "false"
+    end
+    -- find first class matching /^color-.*$/
+    for _, c in ipairs(el.classes) do
+      if string.match(c, "^color%-") then
+        keyclass = c
+        break
+      end
+    end
+
+    local colback = el.attributes.colback
+    local colframe = el.attributes.colframe
+
+    if keyclass then
+      if (colback and colback ~= "") or (colframe and colframe ~= "") then
+        -- store colors for this keyclass
+        color_by_key[keyclass] = {
+          colback = colback,
+          colframe = colframe
+        }
+      else
+        -- fill missing colback/colframe from stored colors
+        local stored = color_by_key[keyclass]
+        if stored then
+          if (not colback or colback == "") and stored.colback then
+            el.attributes.colback = stored.colback
+          end
+          if (not colframe or colframe == "") and stored.colframe then
+            el.attributes.colframe = stored.colframe
+          end
+        end
+      end
+    end
+
+    table.insert(blocks, el)
+    return {}
+  end
+end
+
+function Pandoc(doc)
+  if not use_paracol then return doc end
+
+  local cols = {}
+  for i=1,column_count do cols[i]={} end
+  local idx=1
+
+  for _,b in ipairs(blocks) do
+    local col_idx = tonumber(b.attributes.column)
+    if col_idx == nil then
+      col_idx = idx
+      idx = idx % column_count + 1
+    else
+      col_idx = math.min(math.max(col_idx, 1), column_count)
+    end
+    table.insert(cols[col_idx], b)
+  end
+
+  local out = {}
+  table.insert(out, pandoc.RawBlock("latex", "\\begin{paracol}{"..column_count.."}"))
+  for i=1,column_count do
+    if i>1 then table.insert(out, pandoc.RawBlock("latex", "\\switchcolumn")) end
+    for _,b in ipairs(cols[i]) do
+      local t = b.attributes.title or ""
+      local colback = b.attributes.colback or ""
+      local pushnext = b.attributes.pushnext or false
+      local colframe = b.attributes.colframe or ""
+      local breakable = b.attributes.breakable or false
+
+      local fontsize_str = pandoc.utils.stringify(cheat_fontsize)
+      local fontcmd = "\\" .. fontsize_str:lower()
+      local fontsizetitle_str = pandoc.utils.stringify(cheattitle_fontsize)
+      local fonttitlecmd = "\\" .. fontsizetitle_str:lower()
+
+      local extra_opts = ""
+      local color_opts = ""
+      if colback ~= "" then color_opts = color_opts .. "colback=" .. colback .. "," end
+      if colframe ~= "" then color_opts = color_opts .. "colframe=" .. colframe .. "," end
+      if breakable == "true" then extra_opts = extra_opts .. "breakable," end
+      
+      local box_opts = color_opts .. extra_opts
+      if pushnext == "true" then
+        table.insert(out, pandoc.RawBlock("latex", "\\par\\penalty -10000\\relax"))
+      end
+      -- ensure content is placed as-is, so that quarto-features can be processed correctly.
+      table.insert(out, pandoc.RawBlock("latex",
+        string.format(
+          "\\begin{tcolorbox}[cheatbox, fontupper={%s}, fonttitle={%s}, title={%s}, %s]",
+          fontcmd, fonttitlecmd, t, box_opts
+        )
+      ))
+
+      -- insert ORIGINAL blocks (so callouts are preserved)
+      for _, inner in ipairs(b.content) do
+        table.insert(out, inner)
+      end
+
+      -- end box
+      table.insert(out, pandoc.RawBlock("latex", "\\end{tcolorbox}"))
+      -- table.insert(out, pandoc.RawBlock("latex", box))
+    end
+  end
+  table.insert(out, pandoc.RawBlock("latex", "\\end{paracol}"))
+
+  return pandoc.Pandoc(out, doc.meta)
+end
