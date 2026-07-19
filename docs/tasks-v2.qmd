@@ -37,6 +37,11 @@ format:
     - [ ] Review validity of replacing common latex-commands with quarto natives
         - [ ] columns
         - [ ] images (cf. https://quarto.org/docs/authoring/figures.html#figure-basics and all subsections)
+            - consider a filter that adds `{.lightbox}` to any figure (image or computational)
+                - can be toggled per-figure-level, or document wide. 
+                    - doc-wide: test if this works on figures declares in which various ways? 
+                - ref: https://quarto.org/docs/output-formats/html-lightbox-figures.html
+                    - also https://quarto.org/docs/authoring/figures.html#lightbox-figures
             - consider that e.g the following seems to render correctly:
 
             ````{qmd}
