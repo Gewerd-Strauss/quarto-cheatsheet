@@ -7,6 +7,8 @@ format:
 ---
 
 # Tasks
+- [ ] Prep:
+    - [ ] remove `(node|link|line|head|text)color`-keys from extension and all examples; as they are utterly outdated and unused. No clue how they slipped through this long. 
 - [ ] HTML instance
     - [ ] Prep
         - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
