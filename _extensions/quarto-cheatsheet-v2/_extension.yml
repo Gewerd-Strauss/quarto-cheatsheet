@@ -6,12 +6,12 @@ contributes:
   formats:
     html:
       filters: 
-        - filters/collect-cheats.lua
-        - filters/render-html.lua
+        - filters/render.lua
     pdf:
       filters: 
         # - filters/collect-cheats.lua
-        - filters/cheatblocks-paracol.lua
+        - filters/render.lua
+        # - filters/cheatblocks-paracol.lua
         # - filters/render-pdf.lua
       include-in-header:
         - latex/in-header.tex
