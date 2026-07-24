@@ -11,10 +11,7 @@ contributes:
         - html/cheatsheet.css
     pdf:
       filters: 
-        # - filters/collect-cheats.lua
         - filters/render.lua
-        # - filters/cheatblocks-paracol.lua
-        # - filters/render-pdf.lua
       include-in-header:
         - latex/in-header.tex
       template-partials: 
@@ -40,6 +37,7 @@ contributes:
       pdf-engine: xelatex
       mermaid-format: png
 
+      highlight-style: none
       papersize: a4
       lang: de
 
@@ -58,7 +56,10 @@ contributes:
     quarto-cheatsheet-html:
       inherits: html
       html-math-method: mathjax
-      toc: false
+      format-links: 
+        - pdf
+      toc: true
+      # toc-location: 
 
       #### FONTS
       # TODO: check these options
