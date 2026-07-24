@@ -1,0 +1,16 @@
+---
+title: rendering to one or both formats
+---
+
+To render to both the `html`- and `pdf`-format extensions `quarto-cheatsheet-html` and `quarto-cheatsheet-v2-pdf`, simply issue
+
+```bash
+quarto render <doc.qmd>
+```
+
+To render to only a single format, issue
+
+```bash
+quarto render <doc.qmd> --to quarto-cheatsheet-v2-html
+quarto render <doc.qmd> --to quarto-cheatsheet-pdf
+```

@@ -1,0 +1,16 @@
+---
+title: tasks relevant post v2-rework
+---
+
+# Tasks 
+
+- [ ] Implement additional fontsizes; particularly for footnotes:
+    - ingestion into `format.quarto-cheatsheet-pdf.include-in-header.text` is proven to work
+    - but long-term implementation should probably be bundled into the extension
+        - or perhaps into a utility-addon? (unlikely)
+    
+    ```latex
+    \DeclareRobustCommand{\microsize}{%
+        \fontsize{3.5}{3.8}\selectfont
+    }
+    ```
