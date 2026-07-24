@@ -30,7 +30,8 @@ Some text that should be laid out below the code
 
 ::: {.column}
 <!-- {{< placeholder >}} -->
-{{< placeholder 400 200 format=svg >}}
+
+{{< placeholder 400 200 format=png >}}
 
 :::
 
