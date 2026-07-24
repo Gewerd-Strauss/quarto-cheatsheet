@@ -1,0 +1,4 @@
+format:
+  quarto-cheatsheet-v2-pdf:
+    geometry:
+      - showframe

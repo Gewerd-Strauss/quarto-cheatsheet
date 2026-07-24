@@ -1,5 +1,5 @@
-title: quarto-cheatsheet
-author: Joe Slam, Gewerd Strauss
+title: quarto-cheatsheet-v2
+author: Gewerd Strauss
 version: 2.0.1
 quarto-required: ">=1.9.0"
 contributes:
@@ -10,14 +10,15 @@ contributes:
         - filters/render-html.lua
     pdf:
       filters: 
-        - filters/collect-cheats.lua
-        - filters/render-pdf.lua
+        # - filters/collect-cheats.lua
+        - filters/cheatblocks-paracol.lua
+        # - filters/render-pdf.lua
       include-in-header:
-        - in-header.tex
+        - latex/in-header.tex
       template-partials: 
-        - before-body.tex
-        - after-body.tex
-        - tightlist.tex
+        - latex/before-body.tex
+        - latex/after-body.tex
+        - latex/tightlist.tex
       page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
       geometry: # cannot be moved into pdf
         - bottom=1.5cm
@@ -26,7 +27,7 @@ contributes:
         - right=0.2cm
         - landscape
         - a4paper
-    quarto-cheatsheet-pdf:
+    quarto-cheatsheet-v2-pdf:
       inherits: pdf
       keep-tex: false
       latex-auto-install: true
