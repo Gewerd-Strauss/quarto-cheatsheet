@@ -1,0 +1,43 @@
+---
+title: "feature-test: callouts"
+author: Gewerd Strauss
+format:
+  quarto-cheatsheet-v2-html:
+    cheat-fontsize: tiny
+    cheattitle-fontsize: scriptsize
+    body-fontsize: small
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 3
+    use-paracol: true
+    number-sections: true
+---
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+::: {.callout-note}
+Note that there are five types of callouts, including:
+`note`, `warning`, `important`, `tip`, and `caution`.
+:::
+
+::: {.callout-tip}
+## Tip with Title
+
+This is an example of a callout with a title.
+:::
+
+::: {.callout-caution collapse="true"}
+## Expand To Learn About Collapse
+
+This is an example of a 'folded' caution callout that can be expanded by the user. You can use `collapse="true"` to collapse it by default or `collapse="false"` to make a collapsible callout that is expanded by default.
+:::
+
+::::::
+

@@ -1,0 +1,55 @@
+---
+title: "r-plots"
+date: now
+date-format: YYYY-MM-DD HH:mm:ss
+author: 
+  - Gewerd-Strauss
+  - Galdera-the-Fallen
+  - Zero III
+format:
+  quarto-cheatsheet-v2-html:
+    highlight-style: pygments
+    keep-tex: true
+    latex-auto-mk: true
+    latex-auto-install: true
+    cheat-fontsize: scriptsize
+    cheattitle-fontsize: tiny
+    footnote-fontsize: tiny
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 3
+    geometry:
+    - top=1.5cm
+    - bottom=1.5cm
+    - left=0.2cm
+    - right=0.2cm
+    - landscape
+    # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
+    nodecolor: "FF5733"
+    linecolor: "C70039"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
+    # testarg: 42069    # these arguments must all be set in the document, because they
+                        # cannot be set in the extension's metadata. 
+---
+
+```{r}
+library(ggplot2)
+DD = head(mtcars[, 1:4])
+AA = plot(1:10, (1:10)^2, main="Testplot", xlab="x", ylab="x²")
+BB = ggplot(data.frame(x=1:10, y=(1:10)^2), aes(x, y)) + geom_point() + ggtitle("Testplot mit ggplot2")
+ggsave("tests/BB-testplot.pdf", BB, width = 4, height = 3)
+```
+
+::: {.cheat title="A table (6.13)" column="6"}
+Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-codeblock ausführen kannst; sondern nur inline r. 
+
+1. a `r print(1+2)`
+2. b `r "DD"`
+3. c `r 1+2`
+4. d \includegraphics[width=\linewidth]{BB-testplot.pdf}
+5. e `r knitr::kable(DD, format="latex")`
+6. f `r 1+2`
+
+
+:::

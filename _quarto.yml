@@ -7,6 +7,7 @@ project:
     - index.qmd
     - "tests/"
     - "tests-v2/"
+    - "tests-v2-html/"
 execute:
   freeze: auto
 profile:
