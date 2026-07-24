@@ -5,6 +5,7 @@ project:
   # for render-targets, see profile configs '_quarto-default' and '_quarto-dev'
   render: 
     - index.qmd
+    - "docs/"
     - "tests/"
     - "tests-v2/"
     - "tests-v2-html/"
