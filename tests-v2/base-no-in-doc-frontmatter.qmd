@@ -1,0 +1,135 @@
+---
+title: "feature-test: base-no-in-doc-frontmatter"
+date: now
+author: 
+  - Gewerd Strauss
+format:
+  quarto-cheatsheet-v2-pdf:
+    highlight-style: none
+    keep-tex: true # non-fm
+    latex-auto-mk: true # non-fm
+    latex-auto-install: true # non-fm
+    cheat-fontsize: tiny # fm-mandatory
+    cheattitle-fontsize: scriptsize # fm-mandatory
+    # the above is not fm-mandatory if it is presennt in `contrib.form.pdf.cheattitle-fontsize
+    footnote-fontsize: Huge
+    # cheattitle-fontsized: scriptsize # fm-mandatory
+    # cheat-vspace-above: "-20pt"  # fm-mandatory
+    # cheat-vspace-below: "-20pt"  # fm-mandatory
+    numcols: 3 # fm-mandatory
+    # debug: true
+    # use-paracol: true  # non-fm
+    # number-sections: true # non-fm
+    # geometry:  # non-fm, but in doc it must resides in `format.quarto-cheatsheet-pdf`
+      # - top=1.5cm
+    # nodecolor: "FFFFFF"
+    # linecolor: "FFFFFF"
+    # headcolor: "FFFFFF"
+    # textcolor: "000000"
+    # code-annotations: false # non-fm
+    # test: doc.format.cheatsheet-pdf.test
+    custom:
+      _: _
+      # debug: doc.custom.debug
+      # debug: true
+      # test: doc.custom.test
+---
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+penguins |>                                      # <1>
+  mutate(                                        # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm  # <2>
+  )                                              # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+::::::
+
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+penguins |>                                      # <1>
+  mutate(                                        # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm  # <2>
+  )                                              # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+::::::
+
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+penguins |>                                      # <1>
+  mutate(                                        # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm  # <2>
+  )                                              # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+::::::
+
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+penguins |>                                      # <1>
+  mutate(                                        # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm  # <2>
+  )                                              # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+
+
+dd^[HI]
+::::::
+

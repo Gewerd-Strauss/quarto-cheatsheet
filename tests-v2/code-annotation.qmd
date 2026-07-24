@@ -1,0 +1,55 @@
+---
+title: "feature-test: code-annotation"
+date: now
+author: 
+  - Gewerd Strauss
+format:
+  quarto-cheatsheet-v2-pdf:
+    highlight-style: none
+    keep-tex: true
+    latex-auto-mk: true
+    latex-auto-install: true
+    cheat-fontsize: tiny
+    cheattitle-fontsize: scriptsize
+    body-fontsize: small
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 3
+    use-paracol: true
+    number-sections: true
+    geometry:
+      - top=1.5cm
+      - bottom=1.5cm
+      - left=0.2cm
+      - right=0.2cm
+      - landscape
+    nodecolor: "FFFFFF"
+    linecolor: "FFFFFF"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
+    code-annotations: true
+---
+
+:::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+```r
+library(tidyverse)
+library(palmerpenguins)
+penguins |>                                      # <1>
+  mutate(                                        # <2>
+    bill_ratio = bill_depth_mm / bill_length_mm, # <2>
+    bill_area  = bill_depth_mm * bill_length_mm  # <2>
+  )                                              # <2>
+```
+
+1. Take `penguins`, and then,
+2. add new columns for the bill ratio and bill area.
+::::::
+
