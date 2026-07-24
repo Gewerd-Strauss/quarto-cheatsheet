@@ -6,6 +6,7 @@ project:
   render: 
     - index.qmd
     - "tests/"
+    - "tests-v2/"
 execute:
   freeze: auto
 profile:
@@ -60,5 +61,3 @@ format:
     toc-location: right
     toc-title: Table of Contents
     toc: true
-  quarto-cheatsheet-paracol-pdf:
-    author: Gewerd Strauss
