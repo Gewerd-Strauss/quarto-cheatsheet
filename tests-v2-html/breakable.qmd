@@ -4,6 +4,19 @@ author: Gewerd Strauss
 format:
   quarto-cheatsheet-v2-html:
     page-layout: full
+    cheat-fontsize: large
+    cheattitle-fontsize: Huge
+    body-fontsize: small
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 4
+    use-paracol: true
+    number-sections: true
+  quarto-cheatsheet-pdf:
+    highlight-style: none
+    keep-tex: true
+    latex-auto-mk: true
+    latex-auto-install: true
     cheat-fontsize: tiny
     cheattitle-fontsize: scriptsize
     body-fontsize: small
@@ -12,6 +25,12 @@ format:
     numcols: 3
     use-paracol: true
     number-sections: true
+    geometry:
+      - top=1.5cm
+      - bottom=1.5cm
+      - left=0.2cm
+      - right=0.2cm
+      - landscape
 ---
 
 ::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
@@ -703,6 +722,559 @@ S(v_{S}) & v = (0,j),\; 0 \le j \le |y| \\
     \right\} \\
 \displaystyle
 \max_{\substack{0\le i\le |x|\\0\le j\le |y|}}\left\{S((i,j))\right\} & v = v_{E}
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="4" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="6" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S1(V1)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
 \end{array}
 \right.
 \end{equation*}
