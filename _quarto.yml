@@ -21,11 +21,20 @@ website:
     contents: 
       - text: "Landing"
         href: index.qmd
+      - section: "docs"
+        href: "docs/index.qmd"
       - section: "tests"
         href: "tests/index.qmd"
         contents: 
-          # - "!tests/index.qmd"
           - auto: "tests/*.qmd"
+      # - section: "tests-v2"
+      #   href: "tests-v2/index.qmd"
+      #   contents: 
+      #     - auto: "tests-v2/*.qmd"
+      - section: "tests-v2-html"
+        href: "tests-v2-html/index.qmd"
+        contents: 
+          - auto: "tests-v2-html/*.qmd"
 format: 
   html:
     author: Gewerd Strauss
