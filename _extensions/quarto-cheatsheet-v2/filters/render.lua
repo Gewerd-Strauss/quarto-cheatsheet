@@ -211,6 +211,104 @@ function Div(el)
 end
 
 --------------------------------------------------------------------------------
+-- xcolor -> CSS
+--------------------------------------------------------------------------------
+
+local xcolor_rgb = {
+    black     = { 0, 0, 0 },
+    white     = { 255, 255, 255 },
+    red       = { 255, 0, 0 },
+    green     = { 0, 255, 0 },
+    blue      = { 0, 0, 255 },
+    cyan      = { 0, 255, 255 },
+    magenta   = { 255, 0, 255 },
+    yellow    = { 255, 255, 0 },
+    gray      = { 128, 128, 128 },
+    darkgray  = { 64, 64, 64 },
+    lightgray = { 192, 192, 192 },
+    brown     = { 165, 42, 42 },
+    lime      = { 0, 255, 0 },
+    olive     = { 128, 128, 0 },
+    orange    = { 255, 165, 0 },
+    pink      = { 255, 192, 203 },
+    purple    = { 128, 0, 128 },
+    teal      = { 0, 128, 128 },
+    violet    = { 238, 130, 238 },
+}
+
+local function rgb_to_css(rgb)
+    return string.format("rgb(%d,%d,%d)", rgb[1], rgb[2], rgb[3])
+end
+
+local function mix_rgb(a, b, percent)
+    local p = percent / 100
+    local q = 1 - p
+
+    return {
+        math.floor(a[1] * p + b[1] * q + 0.5),
+        math.floor(a[2] * p + b[2] * q + 0.5),
+        math.floor(a[3] * p + b[3] * q + 0.5),
+    }
+end
+
+local function xcolor_to_css(color)
+    if not color or color == "" then
+        return ""
+    end
+
+    --------------------------------------------------------------------------
+    -- plain CSS colors / #RRGGBB
+    --------------------------------------------------------------------------
+
+    if color:match("^#") then
+        return color
+    end
+
+    if color:match("^rgb") then
+        return color
+    end
+
+    --------------------------------------------------------------------------
+    -- plain xcolor name
+    --------------------------------------------------------------------------
+
+    local rgb = xcolor_rgb[color:lower()]
+
+    if rgb then
+        return rgb_to_css(rgb)
+    end
+
+    --------------------------------------------------------------------------
+    -- xcolor mix:
+    --
+    --     red!30!blue
+    --
+    --------------------------------------------------------------------------
+
+    local c1, pct, c2 =
+        color:match("^([%a]+)!([%d%.]+)!([%a]+)$")
+
+    if c1 then
+        local rgb1 = xcolor_rgb[c1:lower()]
+        local rgb2 = xcolor_rgb[c2:lower()]
+
+        if rgb1 and rgb2 then
+            return rgb_to_css(
+                mix_rgb(rgb1, rgb2, tonumber(pct))
+            )
+        end
+    end
+
+    --------------------------------------------------------------------------
+    -- fallback
+    --------------------------------------------------------------------------
+
+    return color
+end
+
+
+
+--------------------------------------------------------------------------------
 -- HTML renderer
 --------------------------------------------------------------------------------
 
@@ -260,12 +358,17 @@ local function render_html(doc, layout)
 
             local style    = {}
 
-            if colback ~= "" then
-                table.insert(style, "background:" .. colback)
+            if colframe ~= "" then
+                local css = xcolor_to_css(colframe)
+                table.insert(style, "--cheatbox-frame: " .. css)
+                
+                if css == "rbg(0,0,0)" then
+                    table.insert(style, "--cheatbox-title-bg:white")
+                end
             end
 
-            if colframe ~= "" then
-                table.insert(style, "border-color:" .. colframe)
+            if colback ~= "" then
+                table.insert(style, "--cheatbox-back:" .. xcolor_to_css(colback))
             end
 
             if #style > 0 then
