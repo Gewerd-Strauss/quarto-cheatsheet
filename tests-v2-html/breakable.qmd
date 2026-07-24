@@ -3,6 +3,7 @@ title: "feature-test: breakable"
 author: Gewerd Strauss
 format:
   quarto-cheatsheet-v2-html:
+    page-layout: full
     cheat-fontsize: tiny
     cheattitle-fontsize: scriptsize
     body-fontsize: small
