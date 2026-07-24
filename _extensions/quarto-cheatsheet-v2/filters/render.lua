@@ -214,6 +214,135 @@ end
 -- HTML renderer
 --------------------------------------------------------------------------------
 
+local function render_html(doc, layout)
+    local out = {}
+
+    --------------------------------------------------------------------------
+    -- grid container
+    --------------------------------------------------------------------------
+
+    table.insert(
+        out,
+        pandoc.RawBlock(
+            "html",
+            string.format(
+                '<div class="cheatsheet-grid" style="display:grid;grid-template-columns:repeat(%d,minmax(0,1fr));gap:1rem;align-items:start;">',
+                layout.column_count
+            )
+        )
+    )
+
+    --------------------------------------------------------------------------
+    -- columns
+    --------------------------------------------------------------------------
+
+    for _, column in ipairs(layout.columns) do
+        table.insert(
+            out,
+            pandoc.RawBlock(
+                "html",
+                '<div class="cheatsheet-column" style="display:flex;flex-direction:column;gap:1rem;">'
+            )
+        )
+
+        for _, block in ipairs(column) do
+            local title    = block.attributes.title or ""
+            local colback  = block.attributes.colback or ""
+            local colframe = block.attributes.colframe or ""
+
+            ------------------------------------------------------------
+            -- styles
+            ------------------------------------------------------------
+
+            local style    = {
+                "padding:0.75em",
+                "border-radius:6px",
+                "border:1px solid #888",
+                "box-sizing:border-box"
+            }
+
+            if colback ~= "" then
+                table.insert(style, "background:" .. colback)
+            end
+
+            if colframe ~= "" then
+                table.insert(style, "border-color:" .. colframe)
+            end
+
+            table.insert(
+                out,
+                pandoc.RawBlock(
+                    "html",
+                    '<div class="cheatbox" style="' ..
+                    table.concat(style, ";") ..
+                    '">'
+                )
+            )
+
+            ------------------------------------------------------------
+            -- title
+            ------------------------------------------------------------
+
+            if title ~= "" then
+                table.insert(
+                    out,
+                    pandoc.RawBlock(
+                        "html",
+                        string.format(
+                            '<div class="cheatbox-title" style="font-weight:bold;margin-bottom:0.5em;">%s</div>',
+                            title
+                        )
+                    )
+                )
+            end
+
+            ------------------------------------------------------------
+            -- original contents
+            ------------------------------------------------------------
+
+            for _, inner in ipairs(block.content) do
+                table.insert(out, inner)
+            end
+
+            ------------------------------------------------------------
+            -- end box
+            ------------------------------------------------------------
+
+            table.insert(
+                out,
+                pandoc.RawBlock(
+                    "html",
+                    "</div>"
+                )
+            )
+        end
+
+        table.insert(
+            out,
+            pandoc.RawBlock(
+                "html",
+                "</div>"
+            )
+        )
+    end
+
+    --------------------------------------------------------------------------
+    -- end grid
+    --------------------------------------------------------------------------
+
+    table.insert(
+        out,
+        pandoc.RawBlock(
+            "html",
+            "</div>"
+        )
+    )
+
+    return pandoc.Pandoc(out, doc.meta)
+end
+
+
+
 
 --------------------------------------------------------------------------------
 -- PDF renderer
@@ -372,8 +501,8 @@ function Pandoc(doc)
     local cols = aggregate_columns()
 
     if FORMAT:match("html") then
-        return render_pdf(doc, cols)
-        -- return render_html(doc, cols)
+        -- return render_pdf(doc, cols)
+        return render_html(doc, cols)
     else
         return render_pdf(doc, cols)
     end
