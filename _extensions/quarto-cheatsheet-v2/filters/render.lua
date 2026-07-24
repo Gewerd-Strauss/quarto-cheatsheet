@@ -226,7 +226,7 @@ local function render_html(doc, layout)
         pandoc.RawBlock(
             "html",
             string.format(
-                '<div class="cheatsheet-grid" style="display:grid;grid-template-columns:repeat(%d,minmax(0,1fr));gap:1rem;align-items:start;">',
+                '<div class="cheatsheet-grid" style="--columns:%d;">',
                 layout.column_count
             )
         )
@@ -241,7 +241,7 @@ local function render_html(doc, layout)
             out,
             pandoc.RawBlock(
                 "html",
-                '<div class="cheatsheet-column" style="display:flex;flex-direction:column;gap:1rem;">'
+                '<div class="cheatsheet-column">'
             )
         )
 
@@ -250,16 +250,15 @@ local function render_html(doc, layout)
             local colback  = block.attributes.colback or ""
             local colframe = block.attributes.colframe or ""
 
-            ------------------------------------------------------------
-            -- styles
-            ------------------------------------------------------------
+            ------------------------------------------------------------------
+            -- dynamic styles
+            ------------------------------------------------------------------
 
-            local style    = {
-                "padding:0.75em",
-                "border-radius:6px",
-                "border:1px solid #888",
-                "box-sizing:border-box"
+            local attrs    = {
+                'class="cheatbox"'
             }
+
+            local style    = {}
 
             if colback ~= "" then
                 table.insert(style, "background:" .. colback)
@@ -269,50 +268,50 @@ local function render_html(doc, layout)
                 table.insert(style, "border-color:" .. colframe)
             end
 
+            if #style > 0 then
+                table.insert(
+                    attrs,
+                    'style="' .. table.concat(style, ";") .. '"'
+                )
+            end
+
             table.insert(
                 out,
                 pandoc.RawBlock(
                     "html",
-                    '<div class="cheatbox" style="' ..
-                    table.concat(style, ";") ..
-                    '">'
+                    "<section " .. table.concat(attrs, " ") .. ">"
                 )
             )
 
-            ------------------------------------------------------------
+            ------------------------------------------------------------------
             -- title
-            ------------------------------------------------------------
+            ------------------------------------------------------------------
 
             if title ~= "" then
                 table.insert(
                     out,
                     pandoc.RawBlock(
                         "html",
-                        string.format(
-                            '<div class="cheatbox-title" style="font-weight:bold;margin-bottom:0.5em;">%s</div>',
-                            title
-                        )
+                        "<header class=\"cheatbox-title\">"
+                        .. title ..
+                        "</header>"
                     )
                 )
             end
 
-            ------------------------------------------------------------
-            -- original contents
-            ------------------------------------------------------------
+            ------------------------------------------------------------------
+            -- body
+            ------------------------------------------------------------------
 
             for _, inner in ipairs(block.content) do
                 table.insert(out, inner)
             end
 
-            ------------------------------------------------------------
-            -- end box
-            ------------------------------------------------------------
-
             table.insert(
                 out,
                 pandoc.RawBlock(
                     "html",
-                    "</div>"
+                    "</section>"
                 )
             )
         end
@@ -326,10 +325,6 @@ local function render_html(doc, layout)
         )
     end
 
-    --------------------------------------------------------------------------
-    -- end grid
-    --------------------------------------------------------------------------
-
     table.insert(
         out,
         pandoc.RawBlock(
@@ -340,8 +335,6 @@ local function render_html(doc, layout)
 
     return pandoc.Pandoc(out, doc.meta)
 end
-
-
 
 
 --------------------------------------------------------------------------------

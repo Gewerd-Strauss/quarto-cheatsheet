@@ -7,6 +7,8 @@ contributes:
     html:
       filters: 
         - filters/render.lua
+      css: 
+        - html/cheatsheet.css
     pdf:
       filters: 
         # - filters/collect-cheats.lua
@@ -55,8 +57,6 @@ contributes:
       use-paracol: false
     quarto-cheatsheet-html:
       inherits: html
-      css: 
-        - html/cheatsheet.css
       html-math-method: mathjax
       toc: false
 
