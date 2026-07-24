@@ -1,0 +1,722 @@
+---
+title: "feature-test: admonition"
+author: Gewerd Strauss
+format:
+  quarto-cheatsheet-html:
+    highlight-style: none
+    keep-tex: true
+    latex-auto-mk: true
+    latex-auto-install: true
+    cheat-fontsize: tiny
+    cheattitle-fontsize: scriptsize
+    body-fontsize: small
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 3
+    use-paracol: true
+    number-sections: true
+    geometry:
+      - top=1.5cm
+      - bottom=1.5cm
+      - left=0.2cm
+      - right=0.2cm
+      - landscape
+    nodecolor: "FFFFFF"
+    linecolor: "FFFFFF"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
+---
+
+::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
+
+- allgemein definiert für ein Alphabet $\Sigma^{\star}$; besitzt
+- Distanz: minimale Anzahl/Kosten von Operationen, um $x\in\Sigma^{\star}$ in $y\in\Sigma^{\star}$ zu überführen
+- Operationen:
+  - $C$: Copy von $x$ zu $y$
+  - $S_{c}\forall c\in\Sigma$: substituiere nächsten Buchstaben aus $x$ mit $c$ in $y$
+  - $D$: delete den nächsten Buchstaben aus $x$ (überspringe ihn)
+
+:::
+
+
+::: {.cheat title="...mit Einheitskosten (1.2)" column="1"}
+
+
+\begin{align}
+d_{\text{Hamming}}(x,y) &= \sum_{i=1}^{n} 1_{x_{i}\neq y_{i}} \\
+d_{\text{LCS}}(x,y) &= |x| + |y| - 2|LCS(x,y)| \\
+d_{\text{Edit}}(x,y) &= \sum_{min}  a: x\underset{a}{\rightarrow} y | a \in \{C,S_{c},I_{c},D\}
+\end{align}
+
+\noindent
+\begin{minipage}[t]{0.48\linewidth}
+\vspace{0pt}
+\begin{tabular}{l|cccc}
+ & $C$ & $S_C$ & $I_C$ & $D$ \\
+\hline 
+Hamming  & 0   & 1     & $\infty$ & $\infty$ \\
+LCS      & 0   & $\infty$ & 1 & 1 \\
+Edit     & 0 & 1 & 1 & 1
+\end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+\vspace{0pt}
+\textbf{Notizen:}
+
+- Hamming nur für $|x|=|y|$\\
+- Edit: non-trivial, compares $i$-th letter of $x$ with $j$-th letter in $y$\\
+- Hamming: trivial, compares $i$-th position of both $x$ and $y$
+
+\end{minipage}
+
+
+:::
+
+::: {.cheat title="Edit-Distanz Details (1.3)" column="1"}
+- kann prozedual oder rekursiv berechnet werden
+- $A_{opt}$ bleibt auch nach Streichen der letzten Alignmentspalte optimal:
+$A_{opt} = min d(s,t) = min \Sigma_{j} d(s_{j}, t_{j})$
+- Rekursive Berechnung unter Custom-/Einheitskosten (vgl. Tbl in 1.2):
+
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+\(
+\begin{aligned}
+d_{s,t}(i,j)
+&= \min \begin{cases}
+  \begin{cases}
+    d_{s,t}(i-1,j-1)+C & |\, s_i = t_j \\
+    d_{s,t}(i-1,j-1)+S_{c} & |\, \text{sonst}
+  \end{cases}\\
+  d_{s,t}(i-1,j)+D \\
+  d_{s,t}(i,j-1)+I_{c} 
+\end{cases}
+\end{aligned}
+\)
+\end{minipage}
+\vspace{12pt}
+\hfill
+\begin{minipage}[t]{0.43\linewidth}
+\vspace{0pt}
+\(
+\begin{array}{l}
+\text{Init: Row1/Col1:}\\
+d_{s,t}(0,0) = 0\\
+d_{s,t}(i,0) = i \forall (1 \le i \le |s|)\\
+d_{s,t}(0,j) = j \forall (1 \le j \le |t|)
+\end{array}
+\)
+\end{minipage}
+
+- mit dynamischer Programmierung:
+
+
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+\(
+\begin{aligned}
+M_{i,j}
+&= \min \begin{cases}
+  \begin{cases}
+    M_{i-1,j-1}+C & |\, s_i = t_j \\
+    M_{i-1,j-1}+S_{c} & |\, \text{sonst}
+  \end{cases}\\
+  M_{i-1,j}+D \\
+  M_{i,j-1}+I_{c} 
+\end{cases}
+\end{aligned}
+\)
+\end{minipage}
+\vspace{12pt}
+\hfill
+\begin{minipage}[t]{0.43\linewidth}
+\vspace{0pt}
+\(
+\begin{array}{l}
+\text{Init: Row1/Col1:}\\
+M_{0,0}= 0\\
+M_{i,0}= i\times I_{c} \forall i\\
+M_{0,j}= j\times D \forall j
+\end{array}
+\)
+\end{minipage}
+::: 
+
+
+
+::: {.cheat title="Globales Alignment via Needleman-Wunsch (2.1)" column="2" .color-algos-alignment-global colframe="green!100!green"}
+- geg: Edit-Matrix und minimale (custom) Edit-Kosten
+- ges: Alignment mit minimalen Kosten
+- Vorgehen: Stelle Editmatrix gemäß 1.3 (**dynamisch**) auf;  und speichere dabei Backtracking-Pointer
+- Zurückverfolgung aller co-optimalen Pfade ergibt alle co-optimalen Alignments
+- Komplexität:
+  - Zeit: $O(nm)$ (oder $O(n^{2})$)
+  - Platz: $O(nm)$
+:::
+
+
+::: {.cheat title="Globales Alignment mit affinen Lückenkosten via Gotoh (2.2)" column="2" .color-algos-alignment-global}
+- affine Lückenkosten: $g(k) = \alpha + (k-1)\beta$
+- 3 Matrizen speichern Kosten für Alignments der Präfixe:
+  - $D(i,j)$: (Präfix $(a_{1}\dots a_{i},b_{1}\dots b_{j})$)
+  - $P(i,j)$: (Präfix $(a_{1}\dots a_{i},b_{1}\dots b_{j})$, endet in $b$ mit Lücke $\begin{pmatrix}a_{i} \\ \_\end{pmatrix}$)
+  - $Q(i,j)$: (Präfix $(a_{1}\dots a_{i},b_{1}\dots b_{j})$, endet in $a$ mit Lücke $\begin{pmatrix}\_ \\ b_{j}\end{pmatrix}$)
+
+
+
+\noindent
+\begin{minipage}[t]{0.55\linewidth}
+\vspace{0pt}
+\(
+\begin{aligned}
+D_{i,j}
+&= \min \begin{cases}
+  D_{i-1,j-1} + w(a_{i},b_{j})\\
+  P_{i,j}\\
+  Q_{i,j}
+\end{cases} 
+\end{aligned}\\
+\begin{aligned}
+\\\text{with } i,j \geq 1\text{, and for } 1 \leq i \leq |a|, 1 \leq j \leq |b|\text{:}  \\
+\end{aligned}\\
+\begin{aligned}
+P_{i,j}
+&= \min \begin{cases}
+  D_{i-1,j} + g(1)\\
+  P_{i-1,j} + \beta
+\end{cases} \\
+Q_{i,j}
+&= \min \begin{cases}
+  D_{i,j-1} + g(1)\\
+  Q_{i,j-1} + \beta
+\end{cases}
+\end{aligned}
+\)
+\end{minipage}
+\vspace{12pt}
+\hfill
+\begin{minipage}[t]{0.43\linewidth}
+\vspace{0pt}
+\(
+\begin{array}{l}
+\text{Init: Row1/Col1:}\\
+D(0,0)=0\\
+D(i,0)=P(i,0) \\
+D(0,j)=Q(0,j) \\
+P(0,j)=\infty=Q(i,0)
+\end{array}
+\)
+\end{minipage}
+- Zeit- & Platzkoplexität: $O(nm)$
+:::
+
+::: {.cheat title="Globales Alignment als Graph mit Sequenzähnlichkeiten" column="2" .color-algos-alignment-global .pushnext}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item Knoten entsprechen Paaren $(i,j)$ von Positionen in Sequenzen $x,y$
+\item Kanten kennzeichnen notwendige Vorgänger zur Berechnung von $d(i,j)$
+\item Pfad in $G$ von $v_{S}\to v_{E}$: (globales) Alignment
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+
+
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_{S}) & v = (0,0) \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S((0,j-1)) - \gamma & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+S((|x|,|y|)) & v = v_{E} \\ 
+\end{array}
+\right.
+\end{equation*}
+:::
+
+::: {.cheat title="Semi-globales Alignment (2.3)" column="3" .color-algos-alignment-misc colframe="lime!80!lime"}
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\item Ziel: finde bestes Match einer kürzeren Seq innerhalb einer Längeren (maximum der letzten Zeile)
+\item "kostenlose" Lücken an Start+Ende der kürzeren Seq
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S((i-1,0)) - \gamma & v = (i,0),\; 0 \le i \le |x| \\
+S(v_s) = 0 & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+\displaystyle
+\max_{\substack{0\le j\le |y|}}\left\{{S(|x|,j)}\right\} & v = v_{E}
+\end{array}
+\right.
+\end{equation*}
+
+:::
+
+::: {.cheat title="Free end-gap Alignment (2.4)" .breakable column="3" .color-algos-alignment-misc}
+
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\item Ziel: finde eine Überlappung zweier Sequenzen ohne weitere Ähnlichkeiten (z.B. reads) (maximum der letzten Zeile oder Spalte)
+\item "kostenlose" Lücken an Start+Ende der kürzeren Seq
+\item Zeit: $O(?)$
+\item Platz: $O(?)$
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $\gamma\text{: Score für Indels}$
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+
+<!-- \begin{minipage}[t]{0.60\linewidth} -->
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_s \\
+S(v_s) & v = (i,0),\; 0 \le i \le |x| \\
+S(v_s) & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\gamma \\
+    S(i,j-1)-\gamma
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+
+\displaystyle
+\max_{\substack{0\le i\le |x|\\0\le j\le |y|}}\left\{S((i,|y|)), S((|x|,j))\right\} & v = v_{E} \\
+\end{array}
+\right.
+\end{equation*}
+<!-- \end{minipage} -->
+
+
+:::
+
+::: {.cheat title="Lokales Alignment via Smith-Waterman Algo mit Scores (3.1)" column="3" .color-algos-alignment-local colframe="yellow!100!yellow"}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+\item Ziel: finde Teilsequenzen aus $a,b$ mit max. Score
+\item finde Maximum über gesamten Graph/gesamte Matrix
+\item fällt Score unter 0, wird ein neues lokales Alignment begonnen
+\item Backtracking: starte bei $v_{E}$
+\item Zeit: $O(nm)$
+\item Platz: $O(nm)$
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten des Alignments
+\item Randknoten haben Score 0
+\item $\lambda$: lineare Gapstrafe 
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_{S} \\
+S(v_{S}) & v = (i,0),\; 0 \le i \le |x| \\
+S(v_{S}) & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    0 \\
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\lambda \\
+    S(i,j-1)-\lambda
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+\displaystyle
+\max_{\substack{0\le i\le |x|\\0\le j\le |y|}}\left\{S((i,j))\right\} & v = v_{E}
+\end{array}
+\right.
+\end{equation*}
+
+::: {.callout-important appearance="default"}
+does this remain marked-up?
+:::
+
+:::
+
+::: {.cheat title="Hirschberg-Algorithmus NAIV: nur FB-Alignment (1.4)" column="1" .pushnext}
+1. Berechne $D$ und $D_{rev}$ für gegebene $x,y$ und gegebene Kostenmatrix komplett
+  - $D: \epsilon\text{x[1..n]}\text{ vs }\epsilon\text{y[1..m]}$
+  - $D_{rev}: \text{x[1..n]}\epsilon\text{ vs } \text{y[1..m]}\epsilon$
+2. Addiere $D$ und $D_{rev}$ via Superimposing, um Gesamtkostenmatrix $T$ zu erhalten
+3. Bestimme $d(s,t)$ als Wert in der unteren rechten Ecke von $D$ (Endkosten)
+3. Berechne Zusatzkostenmatrix $C$ als $T-d(s,t)$
+4. opt. globale Alignment entspricht dem Pfad von $(0,0)\rightarrow(m,n)$ entlang der Nuller-Kette in $C$.
+
+- 
+:::
+::: {.cheat title="Hirschberg-Algorithmus FEHLERHAFT(1.4)" column="1" .pushnext}
+- Speichere nur aktuelle + vorige Zeile der Edit-Matrix
+- Divide & Conquer: rekursiv, bis $|s|=1$ oder $|t|=1$
+- Forwards-Backwards: bestimme optimalen Splitpunkt in mittlerer Zeile
+
+1. Bestimme Zeile $m' = \lceil m/2\rceil$
+2. s in $s_L$ = s[1..m'], $s_R$ = s[m'+1..m] teilen
+3. Basisfall: |s|≤1 oder |t|≤1 → normales NMW
+:::
+
+::: {.cheat title="Hirschberg: Divide-and-Conquer FEHLERHAFT(1.5)" column="1" .pushnext .hidden}
+4. Rekursive Struktur:  $d(s,t) = \min_j \big(d(s_L,t[1..j]) + d(s_R,t[j+1..n])\big)$
+5. Bestimme optimales $j^{\star} = \lceil |s| / 2 \rceil$ (aus Forward-Backward Methode)
+6. Rekursion:
+  - $A_{L} = \text{Hirschberg}(s_{L}, t[1..j*])$
+  - $A_{R} = \text{Hirschberg}(s_{R}, t[j*+1..n])$
+7. Gesamtes Alignment: $A = A_{L} || A_{R}$
+:::
+
+::: {.cheat title="Hirschberg: Forward-Backward Method FEHLERHAFT(1.6)" column="1"}
+- Vorwärtsmatrix $D(i,j) = \text{Kosten Präfix } s[1..i], t[1..j]$  (je gemäß NMW)
+- Rückwärtsmatrix $D_{rev}(i,j) = \text{Kosten Suffix } s[i+1..m], t[j+1..n]$  (je gemäß NMW)
+- Gesamtkostenmatrix $T(i,j) = D(i,j) + D_{rev}(i,j)$
+- Zusatzkostenmatrix $C(i,j) =  T(i,j) - d(s,t)$
+- Minimum in T $\rightarrow$ optimale Split-Position
+- Praxis: Für Speicheroptimierung reicht oft nur **mittlere Zeile**
+:::
+
+
+
+::: {.cheat title="Lokales Alignment als globales Alignment von Substrings in linearem Platz via Hirschberg" column="2" .color-algos-alignment-local .breakable}
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item lokales Alignment ist globales Alignment von Substrings
+\item finde Start- und Endpunkte,
+\item und berechne darüber globals Alignment via Hirschberg
+\item Zeit: $O(nm)$
+  \item manche Matrixeinträger mehrfach berechnet
+  \item $mn(\sum_{i=1}^{\infty}(\frac{1}{i}))\leq 2mn$ (geom. Reihe)
+\item Platz: $O(n+m)$ (2 Zeilen laufend, Alig hat max n+m Spalten)
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\vspace{-10pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{S}$: Startknoten: maximaler Score in Rückwärts-Matrix $D_{rev}$
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_{S} \\
+S(v_{S}) & v = (i,0),\; 0 \le i \le |x| \\
+S(v_{S}) & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    0 \\
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\lambda \\
+    S(i,j-1)-\lambda
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+\displaystyle
+\max_{\substack{0\le i\le |x|\\0\le j\le |y|}}\left\{S((i,j))\right\} & v = v_{E}
+\end{array}
+\right.
+\end{equation*}
+:::
+
+::: {.cheat title="Lokales Alignment als globales Alignment von Substrings in linearem Platz via Hirschberg" column="3" .color-algos-alignment-local }
+
+\begin{minipage}[t]{0.60\linewidth}
+\tiny
+\begin{itemize}
+\setlength{\itemsep}{0pt}
+\setlength{\parskip}{0pt}
+
+\item lokales Alignment ist globales Alignment von Substrings
+\item finde Start- und Endpunkte,
+\item und berechne darüber globals Alignment via Hirschberg
+\item Zeit: $O(nm)$
+  \item manche Matrixeinträger mehrfach berechnet
+  \item $mn(\sum_{i=1}^{\infty}(\frac{1}{i}))\leq 2mn$ (geom. Reihe)
+\item Platz: $O(n+m)$ (2 Zeilen laufend, Alig hat max n+m Spalten)
+
+\end{itemize}
+\end{minipage}
+\begin{minipage}[t]{0.39\linewidth}
+\tiny
+\textbf{Legende}
+\hspace{-60pt}
+\vspace{-10pt}
+\begin{itemize}
+\setlength{\leftmargin}{0pt}
+\setlength{\itemindent}{-16pt}
+\setlength{\itemsep}{0pt}
+\setlength{\labelsep}{0pt}
+\setlength{\parskip}{0pt}
+\item $v_{S}$: Startknoten des Alignments
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{E}$: Endknoten: maximaler Score in Vorwärts-Matrix $D$
+\item $v_{S}$: Startknoten: maximaler Score in Rückwärts-Matrix $D_{rev}$
+\end{itemize}
+\end{minipage}
+\vspace{-10pt}
+
+
+
+\tiny
+\begin{equation*}
+S(v)=
+\left\{
+\begin{array}{l @{\qquad} l}
+
+0 & v = v_{S} \\
+S(v_{S}) & v = (i,0),\; 0 \le i \le |x| \\
+S(v_{S}) & v = (0,j),\; 0 \le j \le |y| \\
+
+\max\!\left\{
+  \begin{array}{l}
+    0 \\
+    S(i-1,j-1)+\text{score}(x[i],y[j]) \\
+    S(i-1,j)-\lambda \\
+    S(i,j-1)-\lambda
+  \end{array}
+  \right\} & v=(i,j): \left\{
+    \begin{array}{l}
+      1\leq i \le |x|,\\
+      1\leq j \le |y|
+    \end{array}
+    \right\} \\
+\displaystyle
+\max_{\substack{0\le i\le |x|\\0\le j\le |y|}}\left\{S((i,j))\right\} & v = v_{E}
+\end{array}
+\right.
+\end{equation*}
+:::
