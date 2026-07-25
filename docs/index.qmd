@@ -1,0 +1,7 @@
+---
+title: documentation
+listing: default
+format: html
+---
+
+Various notes containing documentation on various aspects of this extension.
