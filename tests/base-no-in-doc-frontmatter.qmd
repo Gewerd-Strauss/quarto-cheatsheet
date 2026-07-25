@@ -22,10 +22,6 @@ format:
     # number-sections: true # non-fm
     # geometry:  # non-fm, but in doc it must resides in `format.quarto-cheatsheet-pdf`
       # - top=1.5cm
-    # nodecolor: "FFFFFF"
-    # linecolor: "FFFFFF"
-    # headcolor: "FFFFFF"
-    # textcolor: "000000"
     # code-annotations: false # non-fm
     # test: doc.format.cheatsheet-pdf.test
     custom:

@@ -25,11 +25,7 @@ format:
     - right=0.2cm
     - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
-    nodecolor: "FF5733"
-    linecolor: "C70039"
-    headcolor: "FFFFFF"
-    textcolor: "000000"
-    # testarg: 42069    # these arguments must all be set in the document, because they
+        # testarg: 42069    # these arguments must all be set in the document, because they
                         # cannot be set in the extension's metadata. 
 ---
 

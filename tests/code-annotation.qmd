@@ -23,11 +23,7 @@ format:
       - left=0.2cm
       - right=0.2cm
       - landscape
-    nodecolor: "FFFFFF"
-    linecolor: "FFFFFF"
-    headcolor: "FFFFFF"
-    textcolor: "000000"
-    code-annotations: true
+        code-annotations: true
 ---
 
 :::::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}
