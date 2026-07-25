@@ -7,30 +7,35 @@ format:
 ---
 
 # Tasks
+- [ ] update readme
+    - [ ] update installation command
+    - [ ] add link to website (do we render this on GH - since GS is not a Pro member?)
 - [ ] HTML instance
-    - [ ] Prep
-        - [ ] Split out monolithic `cheatblocks-paracol.lua`-filter into
-            - `filters/`
+    - [ ] Update Architecture/Prep
+        - [ ] ~~Split out monolithic `cheatblocks-paracol.lua`-filter~~Re-organise `cheatblocks-paracol.lua` into `filters/render.lua`:
+            - `filters/render.lua`:
+                - `function parse_metadata(meta)`
+                - `function collect_cheatblock(el)`
+                - `function aggregate_colums()`
+                - Color conversion for html
+                    - `function rgb_to_css(rgb)`
+                    - `function mix_rgb(a, b, percent)`
+                    - `function xcolor_to_css(color)`
+                - Pandoc callbacks
+                    - `function Meta(meta)`
+                    - `function Div(el)`
+                    - `function Pandoc(doc)`
                 - `collect-cheats.lua`
                     - read metadata
                     - collect cheatblocks
                     - assign columns
                     - propagate colors
                     - remove/don't add hidden blocks
-                - `render-pdf.lua`
-                    - handles pdf rendering pipeline
-                        - `paracol`
-                        - `tcolorbox`
-                - `render-html.lua`
-                    - handles html rendering pipeline
-                        - `<div class="cheatsheet">`
-
             - `latex/`:
                 - `before-body.tex`
                 - `after-body.tex`
                 - `in-header.tex`
                 - `tightlist.tex`
-    - [ ] Implement HTML-instance
             - `html/`:
                 - `cheatsheet.css`
                 - `cheatsheet.js` (potentially)
@@ -96,6 +101,7 @@ format:
             \vspace{-17pt}
             :::
             ````
+        
         - [ ] diagrams
         
 
