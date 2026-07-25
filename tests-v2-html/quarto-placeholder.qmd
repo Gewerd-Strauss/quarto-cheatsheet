@@ -13,8 +13,28 @@ format:
     number-sections: true
 ---
 
-::: {.cheat title="content layout" column="1"}
+::: {.cheat title="placeholder shortcode with no image-format declaration" column="1"}
 
 {{< placeholder >}}
+
+:::
+
+::: {.cheat title="svg-declared placeholder" column="1"}
+
+{{< placeholder format="svg" >}}
+
+:::
+
+::: {.cheat title="png-declared placeholder" column="1"}
+
+{{< placeholder format="png" >}}
+
+:::
+
+::: {.cheat title="GH PR" column="1"}
+
+- [merged quarto PR](https://github.com/quarto-dev/quarto-cli/pull/14724) 
+  - check when next stable release releases
+- [GH issue](https://github.com/quarto-dev/quarto-cli/issues/14722)
 
 :::
