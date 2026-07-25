@@ -1,0 +1,24 @@
+---
+title: outstanding bugs
+---
+
+- [ ] `{{< placeholder >}}`-shortcode does not render properly to html output if not `svg`-format:
+  - [reprex](tests-v2-html/quarto-placeholder.qmd)
+  - [merged quarto PR](https://github.com/quarto-dev/quarto-cli/pull/14724) - check when next stable release releases
+- [ ] mermaid in html: YAML-config
+
+      ```yaml
+      ---
+      format:
+        quarto-cheatsheet-v2-html:
+          mermaid-format: png
+          lightbox: auto
+      ---
+      ```
+      do not apply when declared in `_extension.yaml`. They must be declared on a document-level. Why? 
+- [ ] Fontsizes:
+  - [ ] General
+    - [ ] `quarto-cheatsheet-v2-*.footnote-fontsize` does not seem used. Validate adn remove from all files?
+  - [ ] HTML
+    - [ ] latex-fontsizes are not converted and applied / do nothing. 
+      - Do we care about fontsizes in html output; given that the boxes scale dynamically to content; and that html is not for printing and can thus afford less strict spacing requirements?
