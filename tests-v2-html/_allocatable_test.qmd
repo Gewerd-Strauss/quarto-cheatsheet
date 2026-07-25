@@ -2,7 +2,7 @@
 title: "feature-test: admonition"
 author: Gewerd Strauss
 format:
-  quarto-cheatsheet-html:
+  quarto-cheatsheet-v2-html:
     highlight-style: none
     keep-tex: true
     latex-auto-mk: true
