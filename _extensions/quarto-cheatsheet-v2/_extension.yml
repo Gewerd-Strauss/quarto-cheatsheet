@@ -53,7 +53,7 @@ contributes:
       body-fontsize: "\\footnotesize"
       numcols: 1
       use-paracol: false
-    quarto-cheatsheet-html:
+    quarto-cheatsheet-v2-html:
       inherits: html
       html-math-method: mathjax
       format-links: 
