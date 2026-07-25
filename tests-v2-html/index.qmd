@@ -1,7 +1,6 @@
 ---
 title: feature tests
 listing: default
-format: html
 ---
 
 Feature-test can be found here.

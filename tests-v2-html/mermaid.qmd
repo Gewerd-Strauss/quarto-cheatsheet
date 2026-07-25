@@ -11,9 +11,11 @@ format:
     numcols: 3
     use-paracol: true
     number-sections: true
+    mermaid-format: png # these options do nothing if declared in `_extension.yml`. WHY? 
+    lightbox: auto # these options do nothing if declared in `_extension.yml`. WHY? 
 ---
 
-::: {.cheat title="Mermaid Diagran: flowchart TD (1.1)" column="1"}
+::: {.cheat title="Mermaid zoomable? Diagran: flowchart TD (1.1)" column="1"}
 ```{mermaid}
 %%| fig-width: 2 
 %%| fig-height: 1.3
@@ -91,3 +93,12 @@ sequenceDiagram
 ::: {.cheat title='Mermaid: Format 3' column=1 .color-  colframe=''}
 TODO: sketch out all typical mermaid diagram types, at least those shown by quarto's docs
 :::
+
+::: {.cheat title='Mermaid: Format 3' column=1 .color-  colframe=''}
+
+```{r}
+plot(cars)
+```
+
+:::
+

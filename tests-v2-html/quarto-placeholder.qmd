@@ -1,5 +1,5 @@
 ---
-title: "feature-test: quarto-layout"
+title: "feature-test: placeholder image"
 author: Gewerd Strauss
 format:
   quarto-cheatsheet-v2-html:
@@ -14,26 +14,7 @@ format:
 ---
 
 ::: {.cheat title="content layout" column="1"}
-:::: {layout="[ 40, 60 ]"}
 
-::: {.column}
-```{r}
-#| echo: false
-#| output: true
-# Some code
-a = 1+2.3
-a
-```
-
-Some text that should be laid out below the code
-:::
-
-::: {.column}
-
-stuff
-
-:::
-
-::::
+{{< placeholder >}}
 
 :::
