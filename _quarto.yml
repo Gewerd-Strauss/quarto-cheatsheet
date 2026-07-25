@@ -22,9 +22,11 @@ website:
       - text: "Landing"
         href: index.qmd
       - section: "docs"
-        href: "docs/index.qmd"
+        href: docs/index.qmd
+        contents:
+          - auto: "docs/*.qmd"
       - section: "tests"
-        href: "tests/index.qmd"
+        href: tests/index.qmd
         contents: 
           - auto: "tests/*.qmd"
       # - section: "tests-v2"
