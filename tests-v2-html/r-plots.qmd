@@ -38,7 +38,7 @@ library(ggplot2)
 DD = head(mtcars[, 1:4])
 AA = plot(1:10, (1:10)^2, main="Testplot", xlab="x", ylab="x²")
 BB = ggplot(data.frame(x=1:10, y=(1:10)^2), aes(x, y)) + geom_point() + ggtitle("Testplot mit ggplot2")
-ggsave("tests/BB-testplot.pdf", BB, width = 4, height = 3)
+ggsave("tests-v2-html/BB-testplot.pdf", BB, width = 4, height = 3)
 ```
 
 ::: {.cheat title="A table (6.13)" column="6"}
@@ -47,9 +47,13 @@ Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-co
 1. a `r print(1+2)`
 2. b `r "DD"`
 3. c `r 1+2`
-4. d \includegraphics[width=\linewidth]{BB-testplot.pdf}
+4. d ![](BB-testplot.pdf)
 5. e `r knitr::kable(DD, format="latex")`
 6. f `r 1+2`
 
+
+```{r}
+BB 
+```
 
 :::
