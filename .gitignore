@@ -18,3 +18,5 @@ example2_files
 /_site/
 /site_libs/
 !**/quarto-cheatsheet-v2/**
+
+/tests*/*-listing.json
