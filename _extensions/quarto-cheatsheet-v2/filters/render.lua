@@ -154,10 +154,6 @@ local function collect_cheatblock(el)
 end
 
 --------------------------------------------------------------------------------
--- Pandoc callbacks
---------------------------------------------------------------------------------
-
---------------------------------------------------------------------------------
 -- Column aggregation
 --------------------------------------------------------------------------------
 
@@ -195,19 +191,6 @@ local function aggregate_columns()
     end
 
     return layout
-end
-
-
-function Meta(meta)
-    parse_metadata(meta)
-
-    return meta
-end
-
-function Div(el)
-    if el.classes:includes("cheat") then
-        return collect_cheatblock(el)
-    end
 end
 
 --------------------------------------------------------------------------------
@@ -587,7 +570,21 @@ local function render_pdf(doc, layout)
     return pandoc.Pandoc(out, doc.meta)
 end
 
+--------------------------------------------------------------------------------
+-- Pandoc callbacks
+--------------------------------------------------------------------------------
 
+function Meta(meta)
+    parse_metadata(meta)
+
+    return meta
+end
+
+function Div(el)
+    if el.classes:includes("cheat") then
+        return collect_cheatblock(el)
+    end
+end
 
 function Pandoc(doc)
     if not use_paracol then
