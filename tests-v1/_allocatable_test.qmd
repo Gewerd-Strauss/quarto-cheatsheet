@@ -1,5 +1,5 @@
 ---
-title: "feature-test: breakable"
+title: "feature-test: admonition"
 author: Gewerd Strauss
 format:
   quarto-cheatsheet-pdf:
@@ -15,12 +15,6 @@ format:
     numcols: 3
     use-paracol: true
     number-sections: true
-    geometry:
-      - top=1.5cm
-      - bottom=1.5cm
-      - left=0.2cm
-      - right=0.2cm
-      - landscape
 ---
 
 ::: {.cheat title="Sequenzdistanzen (1.1)" column="1"}

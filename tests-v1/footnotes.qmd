@@ -21,15 +21,6 @@ format:
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
     numcols: 3
-    geometry:
-    - top=1.5cm
-    - bottom=1.5cm
-    - left=0.2cm
-    - right=0.2cm
-    - landscape
-    # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
-    # testarg: 42069    # these arguments must all be set in the document, because they
-                        # cannot be set in the extension's metadata. 
 ---
 
 
@@ -43,6 +34,7 @@ def factorial(n):
     return 1 if n == 0 else n * factorial(n-1)
 ```
 :::
+
 ::: {.cheat title="Rekursion (1.2)" column="1" .color-test}
 Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.[^1]
 
@@ -56,6 +48,7 @@ def factorial(n):
 
 [^1]: normal footnote with `[^1]:` at block-level
 :::
+
 :::
 
 ::: {.cheat title="Rekursion (1.3)" column="1"}
