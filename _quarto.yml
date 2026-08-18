@@ -29,10 +29,10 @@ website:
         href: tests-v1/index.qmd
         contents: 
           - auto: "tests-v1/*.qmd"
-      # - section: "tests-v2"
-      #   href: "tests-v2/index.qmd"
-      #   contents: 
-      #     - auto: "tests-v2/*.qmd"
+      - section: "tests-v2"
+        href: "tests-v2/index.qmd"
+        contents: 
+          - auto: "tests-v2/*.qmd"
       - section: "tests-v2-html"
         href: "tests-v2-html/index.qmd"
         contents: 
