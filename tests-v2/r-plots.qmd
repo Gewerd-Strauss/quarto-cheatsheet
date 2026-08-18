@@ -18,12 +18,6 @@ format:
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
     numcols: 3
-    geometry:
-    - top=1.5cm
-    - bottom=1.5cm
-    - left=0.2cm
-    - right=0.2cm
-    - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
         # testarg: 42069    # these arguments must all be set in the document, because they
                         # cannot be set in the extension's metadata. 
@@ -34,7 +28,7 @@ library(ggplot2)
 DD = head(mtcars[, 1:4])
 AA = plot(1:10, (1:10)^2, main="Testplot", xlab="x", ylab="x²")
 BB = ggplot(data.frame(x=1:10, y=(1:10)^2), aes(x, y)) + geom_point() + ggtitle("Testplot mit ggplot2")
-ggsave("tests/BB-testplot.pdf", BB, width = 4, height = 3)
+ggsave("tests-v2/BB-testplot.pdf", BB, width = 4, height = 3)
 ```
 
 ::: {.cheat title="A table (6.13)" column="6"}

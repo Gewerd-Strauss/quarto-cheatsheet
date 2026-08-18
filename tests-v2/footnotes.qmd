@@ -21,12 +21,6 @@ format:
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
     numcols: 3
-    geometry:
-    - top=1.5cm
-    - bottom=1.5cm
-    - left=0.2cm
-    - right=0.2cm
-    - landscape
     # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
     # testarg: 42069    # these arguments must all be set in the document, because they
                         # cannot be set in the extension's metadata. 
