@@ -6,7 +6,7 @@ project:
   render: 
     - index.qmd
     - "docs/"
-    - "tests/"
+    - "tests-v1/"
     - "tests-v2/"
     - "tests-v2-html/"
 execute:
@@ -25,10 +25,10 @@ website:
         href: docs/index.qmd
         contents:
           - auto: "docs/*.qmd"
-      - section: "tests"
-        href: tests/index.qmd
+      - section: "tests-v1"
+        href: tests-v1/index.qmd
         contents: 
-          - auto: "tests/*.qmd"
+          - auto: "tests-v1/*.qmd"
       # - section: "tests-v2"
       #   href: "tests-v2/index.qmd"
       #   contents: 
