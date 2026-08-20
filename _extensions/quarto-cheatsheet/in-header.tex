@@ -4,11 +4,22 @@
 \usepackage[most]{tcolorbox}
 \tcbuselibrary{listings, skins, breakable}
 \usepackage{tikz}
+\usepackage{enumitem}
 \usepackage{etoolbox}
 \usepackage{fancyhdr}
 \usepackage{listings}  % Added listings for syntax highlighting
 \usepackage{xcolor}    % for custom colors in listings
-
+\setlist[itemize]{
+  itemindent=8pt,
+  leftmargin=6pt,
+  rightmargin=2pt,
+  itemsep=0pt,
+  topsep=0pt,
+  % parskip=0pt,
+  parsep=0pt,
+  partopsep=0pt,
+  label=\textbullet
+}
 % Define tcolorbox style
 \tcbset{
   cheatbox/.style={
