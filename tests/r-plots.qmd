@@ -1,5 +1,5 @@
 ---
-title: "Beispiel-CheatSheet"
+title: "r-plots"
 date: now
 date-format: YYYY-MM-DD HH:mm:ss
 author: 
@@ -14,11 +14,10 @@ format:
     latex-auto-install: true
     cheat-fontsize: scriptsize
     cheattitle-fontsize: tiny
-    body-fontsize: small
+    footnote-fontsize: tiny
     cheat-vspace-above: "-20pt"
     cheat-vspace-below: "-20pt"
     numcols: 3
-    use-paracol: true
     geometry:
     - top=1.5cm
     - bottom=1.5cm
@@ -30,6 +29,8 @@ format:
     linecolor: "C70039"
     headcolor: "FFFFFF"
     textcolor: "000000"
+    # testarg: 42069    # these arguments must all be set in the document, because they
+                        # cannot be set in the extension's metadata. 
 ---
 
 ## Normal Body Text
@@ -271,7 +272,7 @@ library(ggplot2)
 DD = head(mtcars[, 1:4])
 AA = plot(1:10, (1:10)^2, main="Testplot", xlab="x", ylab="x²")
 BB = ggplot(data.frame(x=1:10, y=(1:10)^2), aes(x, y)) + geom_point() + ggtitle("Testplot mit ggplot2")
-ggsave("BB-testplot.pdf", BB, width = 4, height = 3)
+ggsave("tests/BB-testplot.pdf", BB, width = 4, height = 3)
 ```
 ::: {.cheat title="A table (6.13)" column="6"}
 Tabellen via R sind super aufwendig, weil du innerhlab des cheatblocks kein R-codeblock ausführen kannst; sondern nur inline r. 

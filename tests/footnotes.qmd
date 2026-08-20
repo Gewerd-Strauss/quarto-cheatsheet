@@ -1,0 +1,83 @@
+---
+title: "footnotes"
+date: now
+date-format: YYYY-MM-DD HH:mm:ss
+author: 
+  - Gewerd-Strauss
+  - Galdera-the-Fallen
+  - Zero III
+custom:
+  footnote-fontsize: Huge
+format:
+  quarto-cheatsheet-pdf:
+    highlight-style: pygments
+    keep-tex: true
+    latex-auto-mk: true
+    latex-auto-install: true
+    cheat-fontsize: scriptsize
+    cheattitle-fontsize: tiny
+    footnote-fontsize: large
+    body-fontsize: small
+    cheat-vspace-above: "-20pt"
+    cheat-vspace-below: "-20pt"
+    numcols: 3
+    geometry:
+    - top=1.5cm
+    - bottom=1.5cm
+    - left=0.2cm
+    - right=0.2cm
+    - landscape
+    # page-margins: "top=10.2cm, bottom=10.2cm, left=10.5cm, right=15.5cm"
+    nodecolor: "FF5733"
+    linecolor: "C70039"
+    headcolor: "FFFFFF"
+    textcolor: "000000"
+    # testarg: 42069    # these arguments must all be set in the document, because they
+                        # cannot be set in the extension's metadata. 
+---
+
+
+::: {.cheat title="Rekursion (1.1)" .color-rek column="1" colframe="red!100!red" colback="green!20!orange"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.^[Inline footnote]
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+:::
+::: {.cheat title="Rekursion (1.2)" column="1" .color-test}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.[^1]
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+
+
+[^1]: normal footnote with `[^1]:` at block-level
+:::
+:::
+
+::: {.cheat title="Rekursion (1.3)" column="1"}
+Rekursion ist eine Technik, bei der eine Funktion sich selbst aufruft.[^longnote]
+
+Beispiel in Python:
+
+```
+def factorial(n):
+    return 1 if n == 0 else n * factorial(n-1)
+```
+[^longnote]: Here's one with multiple blocks
+
+    Subsequent paragraphs are indented to show they belong to the previous footnote
+
+    Hi
+
+    there
+
+This paragraph is not part of the longnote
+:::

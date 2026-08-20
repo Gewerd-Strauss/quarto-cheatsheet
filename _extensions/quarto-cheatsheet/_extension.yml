@@ -13,22 +13,33 @@ contributes:
         - before-body.tex
         - after-body.tex
         - tightlist.tex
-    quarto-cheatsheet-pdf:
-      latex-auto-install: true
-      inherits: pdf
-      documentclass: article
-      pdf-engine: xelatex
-      geometry: 
+      page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
+      geometry: # cannot be moved into pdf
+        - bottom=1.5cm
+        - top=1.5cm
+        - left=0.2cm
+        - right=0.2cm
+        - landscape
         - a4paper
-        - bottom=78mm
-        # - landscape
+    quarto-cheatsheet-pdf:
+      inherits: pdf
       keep-tex: false
+      latex-auto-install: true
+      documentclass: article
       df-print: kable
-      papersize: a4
       code-line-numbers: true
-      lang: de
       date-format: "DD.MM.YYYY"
+      pdf-engine: xelatex
+      mermaid-format: png
+
+      papersize: a4
+      lang: de
+
       linkcolor: black
+      nodecolor: "185191"
+      linecolor: "185191"
+      headcolor: "FFFFFF"
+      textcolor: "000000"
       cheat-fontsize: "\\scriptsize"
       cheattitle-fontsize: "\\scriptsize"
       cheat-vspace-above: "-4pt"
@@ -36,8 +47,3 @@ contributes:
       body-fontsize: "\\footnotesize"
       numcols: 1
       use-paracol: false
-      page-margins: "top=1cm, bottom=1cm, left=1.5cm, right=1.5cm"
-      nodecolor: "185191"
-      linecolor: "185191"
-      headcolor: "FFFFFF"
-      textcolor: "000000"
