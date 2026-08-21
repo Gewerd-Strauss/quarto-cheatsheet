@@ -3,22 +3,22 @@
 \setcounter{colnum}{1}
 \newlength{\colheight}
 \setlength{\colheight}{0pt}
+$if(has-frontmatter)$
+  \frontmatter
+$endif$
 
-% Custom font size for body text
-$if(quarto-cheatsheet-pdf.body-fontsize)$
-$quarto-cheatsheet-pdf.body-fontsize$
+% Custom font size for footnote text
+$if(footnote-fontsize)$
+\renewcommand{\footnotesize}{\$footnote-fontsize$}
 $endif$
 
 % Custom page geometry
-$if(quarto-cheatsheet-pdf.page-margins)$
-\geometry{$quarto-cheatsheet-pdf.page-margins$}
-$endif$
 $if(has-frontmatter)$
 \mainmatter
 $endif$
 
 %%%% //FOOTER SETUP %%%%
-% Define \Title only if title is present, else empty
+
 $if(title)$
 \newcommand{\Title}{$title$}
 $else$
